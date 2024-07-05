@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
         return new Info()
                 .title("Screwbar API Document")
-                .description("This is Screwbar Server's API document.")
+                .description("Screwbar Server's API document.")
                 .version("v0.0.1")
                 .license(license);
     }
