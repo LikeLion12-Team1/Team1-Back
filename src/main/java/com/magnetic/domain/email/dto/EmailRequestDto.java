@@ -7,6 +7,7 @@ public record EmailRequestDto(
     ) {}
 
     public record AuthRequest (
+            String email,
             String certificationNum
     ) {}
 }

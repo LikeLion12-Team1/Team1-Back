@@ -36,9 +36,9 @@ public class EmailController {
 
     @Operation(summary = "인증번호 확인", description = "이메일로 받은 인증번호 입력")
     @PostMapping("/mail/auth")
-    public ApiResponse<Object> emailAuthenticate(@RequestBody EmailRequestDto.AuthRequest emailAuthRequest) {
+    public ApiResponse<?> emailAuthenticate(@RequestBody EmailRequestDto.AuthRequest emailAuthRequest) {
         if (emailAuthRequest.certificationNum().equals(EmailService.ePw)) {
-            return ApiResponse.onSuccess("인증번호가 일치합니다.");
+            return ApiResponse.onSuccess(userService.redirectToken(emailAuthRequest));
         } else {
             return ApiResponse.onFailure("인증번호가 일치하지 않습니다.");
         }

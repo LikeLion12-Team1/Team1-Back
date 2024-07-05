@@ -1,5 +1,8 @@
 package com.magnetic.domain.user.service;
 
+import com.magnetic.domain.auth.service.AuthService;
+import com.magnetic.domain.email.dto.EmailRequestDto;
+import com.magnetic.domain.email.dto.EmailResponseDto;
 import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.repository.UserRepository;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
     public boolean emailExist(String email) {
         return userRepository.existsByEmail(email);
@@ -24,5 +28,11 @@ public class UserService {
                 .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         user.setPassword(passwordEncoder.encode(userPasswordDto.password()));
         userRepository.save(user);
+    }
+
+    public EmailResponseDto redirectToken(EmailRequestDto.AuthRequest emailAuthRequest) {
+        User user = userRepository.findByEmail(emailAuthRequest.email())
+                .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        return authService.authenticateByToken(user);
     }
 }
