@@ -1,6 +1,12 @@
 package com.magnetic.domain.email.dto;
 
 public record EmailRequestDto(
-    String email
 ) {
+    public record CheckRequest (
+            String email
+    ) {}
+
+    public record AuthRequest (
+            String certificationNum
+    ) {}
 }
