@@ -8,8 +8,8 @@ import com.magnetic.domain.auth.entity.Token;
 import com.magnetic.domain.auth.entity.enums.TokenType;
 import com.magnetic.domain.auth.repository.TokenBlackListRepository;
 import com.magnetic.domain.auth.repository.TokenRepository;
+import com.magnetic.domain.email.dto.EmailResponseDto;
 import com.magnetic.domain.user.entity.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import com.magnetic.domain.user.entity.enums.Role;
 import com.magnetic.domain.user.repository.UserRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
@@ -70,6 +70,15 @@ public class AuthService {
         return AuthResponseDto.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .build();
+    }
+
+    public EmailResponseDto authenticateByToken(User user) {
+        String jwtToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
+        return EmailResponseDto.builder()
+                .accessToken(jwtToken)
                 .build();
     }
 
