@@ -4,9 +4,9 @@ import com.magnetic.domain.crew.dto.request.crewdto.CreateCrewRequestDto;
 import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
 import com.magnetic.domain.crew.dto.response.CrewResponseDto;
 import com.magnetic.domain.crew.service.CrewService;
+import com.magnetic.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +21,9 @@ public class CrewController {
 
     // 크루 생성
     @PostMapping
-    public ResponseEntity<CrewResponseDto> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto) {
+    public ApiResponse<CrewResponseDto> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto) {
         CrewResponseDto crewResponseDto = crewService.createCrew(createCrewRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(crewResponseDto);
+        return ApiResponse.onSuccess(crewResponseDto);
     }
 
     // 크루 조회
