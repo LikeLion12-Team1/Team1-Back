@@ -1,6 +1,5 @@
 package com.magnetic.domain.crew.dto.request.crewdto;
 
-import com.magnetic.domain.crew.entity.Crew;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

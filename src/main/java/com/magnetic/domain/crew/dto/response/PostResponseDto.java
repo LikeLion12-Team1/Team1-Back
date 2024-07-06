@@ -1,6 +1,5 @@
 package com.magnetic.domain.crew.dto.response;
 
-import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
