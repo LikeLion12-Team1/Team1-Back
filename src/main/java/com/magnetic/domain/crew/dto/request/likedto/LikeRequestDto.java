@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Getter
 
 public class LikeRequestDto {
-    public Long user_id;
+    public Long userId;
 
-    public Long post_id;
+    public Long postId;
 
-    public LikeRequestDto(Long user_id, Long post_id) {
-        this.user_id = user_id;
-        this.post_id = post_id;
+    public LikeRequestDto(Long userId, Long postId) {
+        this.userId = userId;
+        this.postId = postId;
     }
 }

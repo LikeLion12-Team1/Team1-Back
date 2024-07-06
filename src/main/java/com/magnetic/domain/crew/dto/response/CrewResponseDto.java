@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -21,6 +25,10 @@ public class CrewResponseDto {
 
     public String sports_category;
 
+    public LocalDateTime createdAt;
+
+    public LocalDateTime updatedAt;
+
 
     public static CrewResponseDto from(Crew crew) {
         return CrewResponseDto.builder()
@@ -28,6 +36,8 @@ public class CrewResponseDto {
                 .name(crew.getName())
                 .region(crew.getRegion())
                 .sports_category(crew.getSportsCategory())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
     }
 

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reply_id;
+    private Long replyId;
 
     @Column
     private String content;

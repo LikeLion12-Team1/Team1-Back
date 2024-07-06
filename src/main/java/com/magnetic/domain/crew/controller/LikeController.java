@@ -1,7 +1,5 @@
 package com.magnetic.domain.crew.controller;
 
-import com.magnetic.domain.crew.service.LikeService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/likes")
 
 public class LikeController {
-    private final LikeService likeService;
+    //private final LikeService likeService;
 
 
 }

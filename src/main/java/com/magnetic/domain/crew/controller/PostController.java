@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +34,14 @@ public class PostController {
         PostResponseDto postResponseDto = postService.getPost(postId);
         return ResponseEntity.ok(postResponseDto);
     }
+
+    //게시글  목록 조회
+    @GetMapping("/posts/crew/{crewName}")
+    public ResponseEntity<List<PostResponseDto>> getPostsByCrewName(@PathVariable String crewName) {
+        List<PostResponseDto> posts = postService.getPostsByCrewName(crewName);
+        return ResponseEntity.ok(posts);
+    }
+
 
     //게시글 수정
     @PutMapping("/{postId}")

@@ -4,12 +4,20 @@ import com.magnetic.domain.crew.dto.request.postdto.CreatePostRequestDto;
 import com.magnetic.domain.crew.dto.request.postdto.UpdatePostRequestDto;
 import com.magnetic.domain.crew.dto.response.CrewResponseDto;
 import com.magnetic.domain.crew.dto.response.PostResponseDto;
+import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.entity.Post;
+import com.magnetic.domain.crew.repository.CrewPostRepository;
 import com.magnetic.domain.crew.repository.PostRepository;
+import com.magnetic.domain.user.converter.UserConverter;
+import com.magnetic.domain.user.dto.UserResponseDto;
+import com.magnetic.domain.user.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -19,6 +27,7 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final CrewPostRepository crewPostRepository;
 
     //게시글 생성
     public PostResponseDto createPost(CreatePostRequestDto createPostRequestDto) {
@@ -33,6 +42,16 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
         return PostResponseDto.from(post);
     }
+
+    //게시글 목록 조회
+    public List<PostResponseDto> getPostsByCrewName(String crewName) {
+        List<Post> posts = crewPostRepository.findAllPostByCrewName(crewName);
+        return posts.stream()
+                .map(PostResponseDto::from)
+                .collect(Collectors.toList());
+    }
+
+
 
     //게시글 수정
     public PostResponseDto updatePost(Long postId, UpdatePostRequestDto updatePostRequestDto) {

@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 
 public class LeaveCrewRequestDto {
 
-    public Long user_id;
+    public Long userId;
 
-    public Long crew_id;
+    public Long crewId;
 
     @Builder
-    public LeaveCrewRequestDto(Long user_id, Long crew_id){
-        this.user_id = user_id;
-        this.crew_id = crew_id;
+    public LeaveCrewRequestDto(Long userId, Long crewId){
+        this.userId = userId;
+        this.crewId = crewId;
     }
 }

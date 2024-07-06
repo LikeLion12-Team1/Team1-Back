@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 
 public class JoinCrewRequestDto {
 
-    public Long user_id;
+    public Long userId;
 
-    public Long crew_id;
+    public Long crewId;
 
     @Builder
-    public JoinCrewRequestDto(Long user_id, Long crew_id){
-        this.user_id = user_id;
-        this.crew_id = crew_id;
+    public JoinCrewRequestDto(Long userId, Long crewId){
+        this.userId = userId;
+        this.crewId = crewId;
     }
 }
