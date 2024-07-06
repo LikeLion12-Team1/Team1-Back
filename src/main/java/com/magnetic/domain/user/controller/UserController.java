@@ -55,7 +55,7 @@ public class UserController {
     @GetMapping("/{nickname}")
     public ApiResponse<String> nicknameDuplicate(@PathVariable("nickname") String nickname) {
         if (userService.nicknameDuplicate(nickname)) {
-            return ApiResponse.onSuccess("존재하는 닉네임 입니다.");
+            return ApiResponse.onSuccess("존재하는 닉네임입니다.");
         } else {
             return ApiResponse.onSuccess("해당 닉네임을 사용할 수 있습니다.");
         }

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,4 +26,7 @@ public class Challenge {
     private String region;
     private String sportsCategory;
     private String notice;
+
+    private LocalDate startAt;
+    private LocalDate untilWhen;
 }

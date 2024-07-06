@@ -5,6 +5,7 @@ import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
 import com.magnetic.domain.crew.dto.response.CrewResponseDto;
 import com.magnetic.domain.crew.service.CrewService;
 import com.magnetic.global.common.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,15 @@ public class CrewController {
     public ResponseEntity<Void> deleteCrew(@PathVariable Long crewId) {
         crewService.deleteCrew(crewId);
         return ResponseEntity.noContent().build();
+    }
+    @Operation(summary = "크루 이름 중복 확인", description = "URI에 검사할 크루 이름 명시")
+    @GetMapping("/{crew_name}")
+    public ApiResponse<String> nicknameDuplicate(@PathVariable("crew_name") String crewName) {
+        if (crewService.crewNameDuplicate(crewName)) {
+            return ApiResponse.onSuccess("존재하는 크루 이름입니다.");
+        } else {
+            return ApiResponse.onSuccess("해당 크루 이름을 사용할 수 있습니다.");
+        }
     }
 }
 
