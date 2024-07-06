@@ -49,10 +49,12 @@ public class UserService {
         return UserConverter.toProfilePreviewDto(user, crewList);
     }
 
-//    public UserResponseDto.ProfilePreview updateProfile(UserRequestDto.Profile request, User user) {
-//        User updatedUser = user.update(request);
-//
-//    }
+    public UserResponseDto.ProfilePreview updateProfile(UserRequestDto.Profile request, User user) {
+        user.updateProfile(request);
+        User updatedUser = userRepository.save(user);
+        List<Crew> crewList = userCrewRepository.findAllCrewByUser(updatedUser);
+        return UserConverter.toProfilePreviewDto(updatedUser, crewList);
+    }
 
 //    public UserResponseDto.ProfilePreview updateProfileImg(UserRequestDto.ProfileImg request, User user) {
 //
@@ -61,5 +63,9 @@ public class UserService {
 
     public boolean nicknameDuplicate(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    public void quitCrew(User user, String crewName) {
+        userCrewRepository.deleteUserCrewByUserAndCrewName(user, crewName);
     }
 }
