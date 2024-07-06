@@ -13,21 +13,21 @@ public class CreatePostRequestDto {
 
     public String content;
 
-    public String photo_url;
+    public String photoUrl;
 
 
     @Builder
-    public CreatePostRequestDto(String title, String content, String photo_url) {
+    public CreatePostRequestDto(String title, String content, String photoUrl) {
         this.title = title;
         this.content= content;
-        this.photo_url = photo_url;
+        this.photoUrl = photoUrl;
     }
 
     public Post toEntity() {
         return Post.builder()
                 .title(title)
                 .content(content)
-                .photo_url(photo_url)
+                .photoUrl(photoUrl)
                 .build();
     }
 }

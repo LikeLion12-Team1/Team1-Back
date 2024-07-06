@@ -26,7 +26,7 @@ public class PostResponseDto {
                 .postId(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .photo_url(post.getPhoto_url())
+                .photo_url(post.getPhotoUrl())
                 .build();
     }
 }
