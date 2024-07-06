@@ -25,9 +25,6 @@ public class CrewResponseDto {
 
     public String sports_category;
 
-    public LocalDateTime createdAt;
-
-    public LocalDateTime updatedAt;
 
 
     public static CrewResponseDto from(Crew crew) {
@@ -36,8 +33,6 @@ public class CrewResponseDto {
                 .name(crew.getName())
                 .region(crew.getRegion())
                 .sports_category(crew.getSportsCategory())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
     }
 

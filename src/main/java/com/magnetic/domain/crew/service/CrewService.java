@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor//DI 생성자 주입을 임의의 코드없이 자동으로 설정해주는 어노테이션
@@ -25,10 +28,25 @@ public class CrewService {
     }
 
     // 크루 조회
-    public CrewResponseDto getCrew(Long crewId) {
-        Crew crew = crewRepository.findById(crewId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));
-        return CrewResponseDto.from(crew);
+    public List<CrewResponseDto> getAllCrews() {
+        List<Crew> crews = crewRepository.findAll();
+        return crews.stream()
+                .map(CrewResponseDto::from)
+                .collect(Collectors.toList());
+    }
+
+    public List<CrewResponseDto> getCrewsByRegion(String region) {
+        List<Crew> crews = crewRepository.findByRegion(region);
+        return crews.stream()
+                .map(CrewResponseDto::from)
+                .collect(Collectors.toList());
+    }
+
+    public List<CrewResponseDto> getCrewsBySportsCategory(String sportsCategory) {
+        List<Crew> crews = crewRepository.findBySportsCategory(sportsCategory);
+        return crews.stream()
+                .map(CrewResponseDto::from)
+                .collect(Collectors.toList());
     }
 
     // 크루 수정

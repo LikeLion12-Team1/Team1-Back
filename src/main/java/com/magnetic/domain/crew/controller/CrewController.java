@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -26,12 +28,28 @@ public class CrewController {
         return ApiResponse.onSuccess(crewResponseDto);
     }
 
-    // 크루 조회
-    @GetMapping("/{crewId}")
-    public ResponseEntity<CrewResponseDto> getCrew(@PathVariable Long crewId) {
-        CrewResponseDto crewResponseDto = crewService.getCrew(crewId);
-        return ResponseEntity.ok(crewResponseDto);
+
+    //크루 전체 조회
+    @GetMapping
+    public ResponseEntity<List<CrewResponseDto>> getAllCrews() {
+        List<CrewResponseDto> crews = crewService.getAllCrews();
+        return ResponseEntity.ok(crews);
     }
+
+    //크루 지역별 조회
+    @GetMapping("/region")
+    public ResponseEntity<List<CrewResponseDto>> getCrewsByRegion(@RequestParam String region) {
+        List<CrewResponseDto> crews = crewService.getCrewsByRegion(region);
+        return ResponseEntity.ok(crews);
+    }
+
+    //크루 스포츠 카테고리별 조회
+    @GetMapping("/sports-category")
+    public ResponseEntity<List<CrewResponseDto>> getCrewsBySportsCategory(@RequestParam String sportsCategory) {
+        List<CrewResponseDto> crews = crewService.getCrewsBySportsCategory(sportsCategory);
+        return ResponseEntity.ok(crews);
+    }
+
 
     // 크루 수정
     @PatchMapping("/{crewId}")
