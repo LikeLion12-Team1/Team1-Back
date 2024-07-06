@@ -51,7 +51,7 @@ public class CrewService {
     }
 
     public boolean crewNameDuplicate(String crewName) {
-        return crewRepository.existsByCrewName(crewName);
+        return crewRepository.existsByName(crewName);
     }
 }
 

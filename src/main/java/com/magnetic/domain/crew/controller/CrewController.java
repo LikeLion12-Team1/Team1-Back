@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/crews")
-
+@RequestMapping("/api/v1/crews")
 public class CrewController {
 
     private final CrewService crewService;
@@ -47,11 +46,12 @@ public class CrewController {
         crewService.deleteCrew(crewId);
         return ResponseEntity.noContent().build();
     }
+
     @Operation(summary = "크루 이름 중복 확인", description = "URI에 검사할 크루 이름 명시")
-    @GetMapping("/{crew_name}")
-    public ApiResponse<String> nicknameDuplicate(@PathVariable("crew_name") String crewName) {
+    @GetMapping("/check/{crew_name}")
+    public ApiResponse<String> crewNameDuplicate(@PathVariable("crew_name") String crewName) {
         if (crewService.crewNameDuplicate(crewName)) {
-            return ApiResponse.onSuccess("존재하는 크루 이름입니다.");
+            return ApiResponse.onSuccess("이미 존재하는 크루 이름입니다.");
         } else {
             return ApiResponse.onSuccess("해당 크루 이름을 사용할 수 있습니다.");
         }

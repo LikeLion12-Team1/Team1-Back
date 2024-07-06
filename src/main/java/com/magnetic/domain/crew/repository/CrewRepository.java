@@ -4,5 +4,5 @@ import com.magnetic.domain.crew.entity.Crew;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CrewRepository extends JpaRepository<Crew, Long> {
-    boolean existsByCrewName(String crewName);
+    boolean existsByName(String crewName);
 }
