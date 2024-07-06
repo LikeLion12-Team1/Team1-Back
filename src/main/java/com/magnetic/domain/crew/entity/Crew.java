@@ -1,6 +1,7 @@
 package com.magnetic.domain.crew.entity;
 
 import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
+import com.magnetic.domain.user.entity.UserChallenge;
 import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -33,6 +34,9 @@ public class Crew extends BaseEntity {
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
     private List<CrewPost> crewPostList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
+    private List<CrewChallenge> crewChallengeList = new ArrayList<>();
 
     @Builder
     public Crew(Long crewId, String name, String region, String sportsCategory, List<CrewPost> crewPostList){

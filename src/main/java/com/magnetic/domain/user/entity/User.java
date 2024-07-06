@@ -38,6 +38,9 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCrew> userCrews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserChallenge> userChallenges = new ArrayList<>();
+
     // Token
     @JsonIgnore
     @ToString.Exclude
@@ -59,8 +62,8 @@ public class User extends BaseEntity implements UserDetails {
         return email;
     }
 
-//    public User update(UserRequestDto.Profile request) {
-//
-//
-//    }
+    public void updateProfile(UserRequestDto.Profile request) {
+        nickname = request.nickname();
+        region = request.region();
+    }
 }

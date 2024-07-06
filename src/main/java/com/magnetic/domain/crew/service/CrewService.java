@@ -50,9 +50,9 @@ public class CrewService {
         crewRepository.delete(crew);
     }
 
-
-
-
+    public boolean crewNameDuplicate(String crewName) {
+        return crewRepository.existsByName(crewName);
+    }
 }
 
     

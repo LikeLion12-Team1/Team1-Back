@@ -25,14 +25,14 @@ public class UserController {
         return ApiResponse.onSuccess(userService.getProfile(user));
     }
 
-//    @Operation(summary = "프로필 수정", description = "닉네임, 활동 지역, 소속 크루 탈퇴 여부를 수정")
-//    @PostMapping("/profile")
-//    public ApiResponse<UserResponseDto.ProfilePreview> updateProfile(
-//            @RequestBody UserRequestDto.Profile request,
-//            @AuthenticationPrincipal User user
-//            ) {
-//        return ApiResponse.onSuccess(userService.updateProfile(request, user));
-//    }
+    @Operation(summary = "프로필 수정", description = "닉네임, 활동 지역, 소속 크루 탈퇴 여부를 수정")
+    @PostMapping("/profile")
+    public ApiResponse<UserResponseDto.ProfilePreview> updateProfile(
+            @RequestBody UserRequestDto.Profile request,
+            @AuthenticationPrincipal User user
+            ) {
+        return ApiResponse.onSuccess(userService.updateProfile(request, user));
+    }
 
 //    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
 //    @PostMapping("/profile-image")
@@ -43,13 +43,21 @@ public class UserController {
 //        return ApiResponse.onSuccess(userService.updateProfileImg(request, user));
 //    }
 
-    @Operation(summary = "nickname 중복 확인")
-    @GetMapping("/{nickname}")
-    public ApiResponse<?> nicknameDuplicate(@PathVariable("nickname") String nickname) {
+    @Operation(summary = "소속 크루 탈퇴", description = "URI에 탈퇴할 크루명 명시")
+    @DeleteMapping("/profile/{crew_name}")
+    public ApiResponse<?> quitCrew(@PathVariable("crew_name") String crewName,
+                                   @AuthenticationPrincipal User user) {
+        userService.quitCrew(user, crewName);
+        return ApiResponse.noContent();
+    }
+
+    @Operation(summary = "nickname 중복 확인", description = "URI에 검사할 nickname 명시")
+    @GetMapping("/check/{nickname}")
+    public ApiResponse<String> nicknameDuplicate(@PathVariable("nickname") String nickname) {
         if (userService.nicknameDuplicate(nickname)) {
-            return ApiResponse.onSuccess("존재하는 닉네임 입니다.");
+            return ApiResponse.onSuccess("이미 존재하는 닉네임입니다.");
         } else {
-            return ApiResponse.onFailure("해당 닉네임을 사용할 수 있습니다.");
+            return ApiResponse.onSuccess("해당 닉네임을 사용할 수 있습니다.");
         }
     }
 
