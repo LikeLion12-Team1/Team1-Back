@@ -49,15 +49,15 @@ public class UserService {
         return UserConverter.toProfilePreviewDto(user, crewList);
     }
 
-    public UserResponseDto.ProfilePreview updateProfile(UserRequestDto.Profile request, User user) {
-        User updatedUser = user.update(request);
+//    public UserResponseDto.ProfilePreview updateProfile(UserRequestDto.Profile request, User user) {
+//        User updatedUser = user.update(request);
+//
+//    }
 
-    }
-
-    public UserResponseDto.ProfilePreview updateProfileImg(UserRequestDto.ProfileImg request, User user) {
-
-
-    }
+//    public UserResponseDto.ProfilePreview updateProfileImg(UserRequestDto.ProfileImg request, User user) {
+//
+//
+//    }
 
     public boolean nicknameDuplicate(String nickname) {
         return userRepository.existsByNickname(nickname);
