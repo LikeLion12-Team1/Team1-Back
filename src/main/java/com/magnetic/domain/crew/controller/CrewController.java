@@ -31,38 +31,38 @@ public class CrewController {
 
     //크루 전체 조회
     @GetMapping
-    public ResponseEntity<List<CrewResponseDto>> getAllCrews() {
+    public ApiResponse<List<CrewResponseDto>> getAllCrews() {
         List<CrewResponseDto> crews = crewService.getAllCrews();
-        return ResponseEntity.ok(crews);
+        return ApiResponse.onSuccess(crews);
     }
 
     //크루 지역별 조회
     @GetMapping("/region")
-    public ResponseEntity<List<CrewResponseDto>> getCrewsByRegion(@RequestParam String region) {
+    public ApiResponse<List<CrewResponseDto>> getCrewsByRegion(@RequestParam String region) {
         List<CrewResponseDto> crews = crewService.getCrewsByRegion(region);
-        return ResponseEntity.ok(crews);
+        return ApiResponse.onSuccess(crews);
     }
 
     //크루 스포츠 카테고리별 조회
     @GetMapping("/sports-category")
-    public ResponseEntity<List<CrewResponseDto>> getCrewsBySportsCategory(@RequestParam String sportsCategory) {
+    public ApiResponse<List<CrewResponseDto>> getCrewsBySportsCategory(@RequestParam String sportsCategory) {
         List<CrewResponseDto> crews = crewService.getCrewsBySportsCategory(sportsCategory);
-        return ResponseEntity.ok(crews);
+        return ApiResponse.onSuccess(crews);
     }
 
 
     // 크루 수정
     @PatchMapping("/{crewId}")
-    public ResponseEntity<CrewResponseDto> updateCrew(@PathVariable Long crewId, @RequestBody UpdateCrewRequestDto updateCrewRequestDto) {
+    public ApiResponse<CrewResponseDto> updateCrew(@PathVariable Long crewId, @RequestBody UpdateCrewRequestDto updateCrewRequestDto) {
         CrewResponseDto crewResponseDto = crewService.updateCrew(crewId, updateCrewRequestDto);
-        return ResponseEntity.ok(crewResponseDto);
+        return ApiResponse.onSuccess(crewResponseDto);
     }
 
     // 크루 삭제
     @DeleteMapping("/{crewId}")
-    public ResponseEntity<Void> deleteCrew(@PathVariable Long crewId) {
+    public ApiResponse<Void> deleteCrew(@PathVariable Long crewId) {
         crewService.deleteCrew(crewId);
-        return ResponseEntity.noContent().build();
+        return ApiResponse.noContent();
     }
 
     @Operation(summary = "크루 이름 중복 확인", description = "URI에 검사할 크루 이름 명시")
