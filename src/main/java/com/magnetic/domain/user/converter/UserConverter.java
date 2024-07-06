@@ -5,7 +5,6 @@ import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.dto.UserResponseDto;
 import com.magnetic.domain.user.entity.User;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class UserConverter {

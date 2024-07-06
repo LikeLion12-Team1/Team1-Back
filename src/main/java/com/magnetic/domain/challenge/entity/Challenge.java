@@ -26,6 +26,7 @@ public class Challenge {
     private String region;
     private String sportsCategory;
     private String notice;
+    private String name;
 
     private LocalDate startAt;
     private LocalDate untilWhen;

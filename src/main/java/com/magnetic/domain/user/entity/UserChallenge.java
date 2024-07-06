@@ -19,6 +19,8 @@ public class UserChallenge {
     @Column(name = "user_challenge_id")
     private Long userChallengeId;
 
+    private String status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

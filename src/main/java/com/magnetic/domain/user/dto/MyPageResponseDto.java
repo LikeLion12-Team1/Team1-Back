@@ -1,44 +1,45 @@
 package com.magnetic.domain.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public record MyPageResponseDto() {
+public class MyPageResponseDto {
     @Builder
-    public record MyPagePreview(
-            MyCrewPreviewList myCrewPreviewList,
-            MyChallengePreviewList myChallengePreviewList
-    ) {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    public static class MyPagePreview {
+        private List<MyCrewPreview> myCrewPreviewList;
+        private List<MyChallengePreview> myChallengePreviewList;
+
     }
 
     @Builder
-    public record MyCrewPreviewList(
-            List<MyCrewPreview> myCrewPreviewList
-    ) {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    public static class MyCrewPreview {
+        private Long crewId;
+        private String crewName;
+        private LocalDateTime createdAt;
+        private LocalDate inactiveDate;
     }
 
     @Builder
-    public record MyChallengePreviewList(
-            List<MyChallengePreview> myChallengePreviewList
-    ) {
-    }
-
-    @Builder
-    public record MyCrewPreview(
-            String crewName,
-            LocalDate startAt,
-            LocalDate untilWhen
-    ) {
-    }
-
-    @Builder
-    public record MyChallengePreview(
-            String challengeName,
-            LocalDate startAt,
-            LocalDate untilWhen,
-            String status
-    ) {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    public static class MyChallengePreview {
+        private Long challengeId;
+        private String challengeName;
+        private LocalDate startAt;
+        private LocalDate untilWhen;
+        private String status;
     }
 }
