@@ -51,7 +51,7 @@ public class UserController {
         return ApiResponse.noContent();
     }
 
-    @Operation(summary = "nickname 중복 확인")
+    @Operation(summary = "nickname 중복 확인", description = "URI에 검사할 nickname 명시")
     @GetMapping("/{nickname}")
     public ApiResponse<String> nicknameDuplicate(@PathVariable("nickname") String nickname) {
         if (userService.nicknameDuplicate(nickname)) {
