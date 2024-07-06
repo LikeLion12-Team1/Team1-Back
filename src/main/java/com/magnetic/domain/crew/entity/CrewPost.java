@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class CrewPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "crew_post_id")
     private Long crew_post_id;
 
     @ManyToOne(fetch=FetchType.LAZY)
