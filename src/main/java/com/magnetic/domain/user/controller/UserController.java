@@ -25,23 +25,23 @@ public class UserController {
         return ApiResponse.onSuccess(userService.getProfile(user));
     }
 
-    @Operation(summary = "프로필 수정", description = "닉네임, 활동 지역, 소속 크루 탈퇴 여부를 수정")
-    @PostMapping("/profile")
-    public ApiResponse<UserResponseDto.ProfilePreview> updateProfile(
-            @RequestBody UserRequestDto.Profile request,
-            @AuthenticationPrincipal User user
-            ) {
-        return ApiResponse.onSuccess(userService.updateProfile(request, user));
-    }
+//    @Operation(summary = "프로필 수정", description = "닉네임, 활동 지역, 소속 크루 탈퇴 여부를 수정")
+//    @PostMapping("/profile")
+//    public ApiResponse<UserResponseDto.ProfilePreview> updateProfile(
+//            @RequestBody UserRequestDto.Profile request,
+//            @AuthenticationPrincipal User user
+//            ) {
+//        return ApiResponse.onSuccess(userService.updateProfile(request, user));
+//    }
 
-    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
-    @PostMapping("/profile-image")
-    public ApiResponse<UserResponseDto.ProfilePreview> updateProfileImg(
-            @RequestBody UserRequestDto.ProfileImg request,
-            @AuthenticationPrincipal User user
-    ) {
-        return ApiResponse.onSuccess(userService.updateProfileImg(request, user));
-    }
+//    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
+//    @PostMapping("/profile-image")
+//    public ApiResponse<UserResponseDto.ProfilePreview> updateProfileImg(
+//            @RequestBody UserRequestDto.ProfileImg request,
+//            @AuthenticationPrincipal User user
+//    ) {
+//        return ApiResponse.onSuccess(userService.updateProfileImg(request, user));
+//    }
 
     @Operation(summary = "nickname 중복 확인")
     @GetMapping("/{nickname}")

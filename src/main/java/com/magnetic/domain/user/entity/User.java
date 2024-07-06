@@ -59,8 +59,8 @@ public class User extends BaseEntity implements UserDetails {
         return email;
     }
 
-    public User update(UserRequestDto.Profile request) {
-
-
-    }
+//    public User update(UserRequestDto.Profile request) {
+//
+//
+//    }
 }

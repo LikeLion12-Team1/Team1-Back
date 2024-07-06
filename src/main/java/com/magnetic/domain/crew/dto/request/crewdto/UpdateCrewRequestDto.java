@@ -14,12 +14,12 @@ public class UpdateCrewRequestDto {
 
     public String region;
 
-    public String sports_category;
+    public String sportsCategory;
 
     @Builder
-    public UpdateCrewRequestDto(String name, String region, String sports_category){
+    public UpdateCrewRequestDto(String name, String region, String sportsCategory){
         this.name = name;
         this.region = region;
-        this.sports_category = sports_category;
+        this.sportsCategory = sportsCategory;
     }
 }

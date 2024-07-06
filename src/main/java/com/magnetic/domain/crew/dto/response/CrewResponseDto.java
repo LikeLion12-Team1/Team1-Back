@@ -1,5 +1,6 @@
 package com.magnetic.domain.crew.dto.response;
 
+import com.magnetic.domain.crew.entity.Crew;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class CrewResponseDto {
 
-    public Long crew_id;
+    public Long crewId;
 
     public String name;
 
@@ -23,10 +24,10 @@ public class CrewResponseDto {
 
     public static CrewResponseDto from(Crew crew) {
         return CrewResponseDto.builder()
-                .crew_id(crew.getCrew_id())
+                .crewId(crew.getCrewId())
                 .name(crew.getName())
                 .region(crew.getRegion())
-                .sports_category(crew.getSports_category())
+                .sports_category(crew.getSportsCategory())
                 .build();
     }
 
