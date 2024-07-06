@@ -2,6 +2,7 @@ package com.magnetic.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.magnetic.domain.auth.entity.Token;
+import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.entity.enums.Role;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +35,9 @@ public class User extends BaseEntity implements UserDetails {
     private String region;
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCrew> userCrews = new ArrayList<>();
+
     // Token
     @JsonIgnore
     @ToString.Exclude
@@ -54,4 +59,8 @@ public class User extends BaseEntity implements UserDetails {
         return email;
     }
 
+    public User update(UserRequestDto.Profile request) {
+
+
+    }
 }
