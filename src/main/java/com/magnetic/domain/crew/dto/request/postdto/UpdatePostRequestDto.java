@@ -13,14 +13,14 @@ public class UpdatePostRequestDto {
 
     public String content;
 
-    public String photo_url;
+    public String photoUrl;
 
 
     @Builder
-    public UpdatePostRequestDto(String title, String content, String photo_url) {
+    public UpdatePostRequestDto(String title, String content, String photoUrl) {
         this.title = title;
         this.content= content;
-        this.photo_url = photo_url;
+        this.photoUrl = photoUrl;
     }
 
 }

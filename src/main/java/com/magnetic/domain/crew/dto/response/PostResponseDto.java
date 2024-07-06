@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class PostResponseDto {
 
-    public Long post_id;
+    public Long postId;
 
     public String title;
 
@@ -23,7 +23,7 @@ public class PostResponseDto {
 
     public static PostResponseDto from(Post post) {
         return PostResponseDto.builder()
-                .post_id(post.getPost_id())
+                .postId(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .photo_url(post.getPhoto_url())

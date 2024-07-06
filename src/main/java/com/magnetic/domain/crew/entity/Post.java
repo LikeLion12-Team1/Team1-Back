@@ -20,14 +20,14 @@ import java.util.List;
 public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long post_id;
+    private Long postId;
 
     @Column
     private String title;
     @Column
     private String content;
     @Column
-    private String photo_url;
+    private String photoUrl;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CrewPost> crewposts;
@@ -39,11 +39,11 @@ public class Post extends BaseEntity {
     private List<Reply> replies;
 
     @Builder
-    public Post(Long post_id, String title, String content, String photo_url, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
-        this.post_id = post_id;
+    public Post(Long postId, String title, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
+        this.postId = postId;
         this.title = title;
         this.content= content;
-        this.photo_url = photo_url;
+        this.photoUrl = photoUrl;
         this.crewposts = crewposts;
         this.likes = likes;
         this.replies = replies;
@@ -52,7 +52,7 @@ public class Post extends BaseEntity {
     public void update(UpdatePostRequestDto updatePostRequestDto) {
         title = updatePostRequestDto.getTitle();
         content = updatePostRequestDto.getContent();
-        photo_url = updatePostRequestDto.getPhoto_url();
+        photoUrl = updatePostRequestDto.getPhotoUrl();
     }
 
 
