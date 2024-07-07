@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -15,6 +17,12 @@ public class MyPageService {
     private final UserRepository userRepository;
 
     public MyPageResponseDto.MyPagePreview getMyPage(User user) {
-        return null;
+        List<MyPageResponseDto.MyChallengePreview> myChallengePreviewList = userRepository.findMyChallenge(user);
+        List<MyPageResponseDto.MyCrewPreview> myCrewPreviewList = userRepository.findMyCrew(user);
+
+        return MyPageResponseDto.MyPagePreview.builder()
+                .myCrewPreviewList(myCrewPreviewList)
+                .myChallengePreviewList(myChallengePreviewList)
+                .build();
     }
 }
