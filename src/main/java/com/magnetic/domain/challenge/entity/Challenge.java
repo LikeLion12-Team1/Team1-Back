@@ -1,5 +1,6 @@
 package com.magnetic.domain.challenge.entity;
 
+import com.magnetic.domain.crew.entity.CrewChallenge;
 import com.magnetic.domain.user.entity.UserChallenge;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,10 @@ public class Challenge {
 
     private LocalDate startAt;
     private LocalDate untilWhen;
+
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
+    private List<UserChallenge> userChallengeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
+    private List<CrewChallenge> crewChallengeList = new ArrayList<>();
 }
