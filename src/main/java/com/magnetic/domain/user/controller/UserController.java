@@ -47,8 +47,8 @@ public class UserController {
     @DeleteMapping("/profile/{crew_name}")
     public ApiResponse<?> quitCrew(@PathVariable("crew_name") String crewName,
                                    @AuthenticationPrincipal User user) {
-        userService.quitCrew(user, crewName);
-        return ApiResponse.noContent();
+        userService.inactiveCrew(user, crewName);
+        return ApiResponse.onSuccess("탈퇴 완료");
     }
 
     @Operation(summary = "nickname 중복 확인", description = "URI에 검사할 nickname 명시")
