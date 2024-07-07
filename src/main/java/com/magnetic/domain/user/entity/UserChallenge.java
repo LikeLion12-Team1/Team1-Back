@@ -20,6 +20,7 @@ public class UserChallenge {
     private Long userChallengeId;
 
     private String status;
+    private Long verification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

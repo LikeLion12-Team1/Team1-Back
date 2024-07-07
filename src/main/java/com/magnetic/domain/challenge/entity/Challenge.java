@@ -28,6 +28,7 @@ public class Challenge {
     private String sportsCategory;
     private String notice;
     private String name;
+    private Long requiredVerification;
 
     private LocalDate startAt;
     private LocalDate untilWhen;
