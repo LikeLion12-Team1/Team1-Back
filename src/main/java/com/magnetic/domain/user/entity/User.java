@@ -2,6 +2,7 @@ package com.magnetic.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.magnetic.domain.auth.entity.Token;
+import com.magnetic.domain.calendar.entity.Todo;
 import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.entity.enums.Role;
 import com.magnetic.global.common.BaseEntity;
@@ -40,6 +41,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserChallenge> userChallenges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Todo> todoList = new ArrayList<>();
 
     // Token
     @JsonIgnore
