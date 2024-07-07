@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -36,18 +37,19 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Reply> replies;
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    @OrderBy("replyId asc")
+//    private List<Reply> replies;
 
     @Builder
-    public Post(Long postId, String title, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
+    public Post(Long postId, String title, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes/*, List<Reply> replies*/) {
         this.postId = postId;
         this.title = title;
         this.content= content;
         this.photoUrl = photoUrl;
         this.crewposts = crewposts;
         this.likes = likes;
-        this.replies = replies;
+//        this.replies = replies;
     }
 
     public void update(UpdatePostRequestDto updatePostRequestDto) {

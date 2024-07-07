@@ -21,6 +21,8 @@ public class PostResponseDto {
 
     public String photo_url;
 
+    //public List<ReplyResponseDto> replies;
+
     public static PostResponseDto from(Post post) {
         return PostResponseDto.builder()
                 .postId(post.getPostId())

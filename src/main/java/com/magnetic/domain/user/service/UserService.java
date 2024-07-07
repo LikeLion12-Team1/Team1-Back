@@ -68,4 +68,9 @@ public class UserService {
     public void quitCrew(User user, String crewName) {
         userCrewRepository.deleteUserCrewByUserAndCrewName(user, crewName);
     }
+
+//    public User findByEmail(String email) {
+//        return userRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("해당 이메일을 가진 사용자가 존재하지 않습니다."));
+//    }
 }
