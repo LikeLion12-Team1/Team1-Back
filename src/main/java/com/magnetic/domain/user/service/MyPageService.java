@@ -2,8 +2,7 @@ package com.magnetic.domain.user.service;
 
 import com.magnetic.domain.user.dto.MyPageResponseDto;
 import com.magnetic.domain.user.entity.User;
-import com.magnetic.domain.user.repository.UserChallengeRepository;
-import com.magnetic.domain.user.repository.UserCrewRepository;
+import com.magnetic.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyPageService {
 
-    private final UserCrewRepository userCrewRepository;
-    private final UserChallengeRepository userChallengeRepository;
+    private final UserRepository userRepository;
 
-    //TODO QueryDsl방식으로 변경
     public MyPageResponseDto.MyPagePreview getMyPage(User user) {
+        List<MyPageResponseDto.MyChallengePreview> myChallengePreviewList = userRepository.findMyChallenge(user);
+        List<MyPageResponseDto.MyCrewPreview> myCrewPreviewList = userRepository.findMyCrew(user);
+
         return MyPageResponseDto.MyPagePreview.builder()
+                .myCrewPreviewList(myCrewPreviewList)
+                .myChallengePreviewList(myChallengePreviewList)
                 .build();
     }
 }
