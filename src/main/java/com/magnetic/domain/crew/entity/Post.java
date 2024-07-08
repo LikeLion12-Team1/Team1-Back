@@ -24,8 +24,6 @@ public class Post extends BaseEntity {
     private Long postId;
 
     @Column
-    private String postType;
-    @Column
     private String content;
     @Column
     private String photoUrl;
@@ -46,9 +44,9 @@ public class Post extends BaseEntity {
     private User user;
 
     @Builder
-    public Post(Long postId, String postType, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
+    public Post(Long postId, String category, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
         this.postId = postId;
-        this.postType = postType;
+        this.category = category;
         this.content= content;
         this.photoUrl = photoUrl;
         this.crewposts = crewposts;
@@ -57,7 +55,7 @@ public class Post extends BaseEntity {
     }
 
     public void update(UpdatePostRequestDto updatePostRequestDto) {
-        postType = updatePostRequestDto.getPostType();
+        category = updatePostRequestDto.getCategory();
         content = updatePostRequestDto.getContent();
         photoUrl = updatePostRequestDto.getPhotoUrl();
     }
