@@ -20,6 +20,20 @@ public enum ErrorStatus implements BaseErrorCode {
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "USER400", "사용자가 존재하지 않습니다."),
     _INVALID_USER(HttpStatus.BAD_REQUEST, "USER401" , "아이디 또는 비밀번호가 틀렸습니다."),
 
+    // Crew 에러
+    _NOT_FOUND_CREW(HttpStatus.NOT_FOUND, "CREW400", "해당 크루가 존재하지 않습니다."),
+    _NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "CREW401", "크루에 해당 사용자가 존재하지 않습니다."),
+
+    // Challenge 에러
+    _NOT_FOUND_CHALLENGE(HttpStatus.NOT_FOUND, "CHALLENGE400", "해당 챌린지가 존재하지 않습니다."),
+    _NOT_CHALLENGING(HttpStatus.NOT_FOUND, "CHALLENGE401", "챌린지 수행중이 아닙니다."),
+
+    // Plant 에러
+    _NOT_FOUND_PLANT(HttpStatus.NOT_FOUND, "PLANT400", "해당 플랜트가 존재하지 않습니다."),
+
+    // Post 에러
+    _NOT_FOUND_POST(HttpStatus.NOT_FOUND, "POST400", "해당 게시글이 존재하지 않습니다."),
+
     // Calendar 에러
     _NOT_FOUND_TODO(HttpStatus.NOT_FOUND, "TODO400", "해당 일정이 존재하지 않습니다."),
 

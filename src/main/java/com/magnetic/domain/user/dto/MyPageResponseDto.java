@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public class MyPageResponseDto {
     @Builder
@@ -42,4 +43,43 @@ public class MyPageResponseDto {
         private LocalDate untilWhen;
         private String status;
     }
+
+    @Builder
+    public record AdminMyPagePreview(
+            AdminMemberPreviewList adminMemberPreviewList,
+            AdminCommunityPreviewList adminCommunityPreviewList
+    ) {
+    }
+
+    @Builder
+    public record AdminMemberPreviewList(
+            List<AdminMemberPreview> adminMemberPreviewList
+    ) {}
+
+    @Builder
+    public record AdminMemberPreview(
+            Long userId,
+            String nickname
+    ) {
+    }
+
+    @Builder
+    public record AdminCommunityPreviewList(
+            List<AdminCommunityPreview> adminCommunityPreviewList
+    ) {}
+
+    @Builder
+    public record AdminCommunityPreview(
+            Long postId,
+            Long authorId,
+            LocalDateTime createdAt,
+            String category
+    ) {
+    }
+
+    @Builder
+    public record VerifiedResult(
+        Byte isVerified,
+        Long verificationCount
+    ) {}
 }

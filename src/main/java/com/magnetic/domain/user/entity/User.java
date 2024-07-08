@@ -5,6 +5,7 @@ import com.magnetic.domain.auth.entity.Token;
 import com.magnetic.domain.calendar.entity.Todo;
 import com.magnetic.domain.crew.entity.Like;
 import com.magnetic.domain.crew.entity.Post;
+import com.magnetic.domain.crew.entity.Reply;
 import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.entity.enums.Role;
 import com.magnetic.global.common.BaseEntity;
@@ -47,6 +48,15 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Todo> todoList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserPlant> userPlantList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reply> replyList = new ArrayList<>();
+
     // Token
     @JsonIgnore
     @ToString.Exclude
@@ -56,9 +66,6 @@ public class User extends BaseEntity implements UserDetails {
     //Like
     @OneToMany(mappedBy = "user")
     private List<Like> likes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<Post> postList = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

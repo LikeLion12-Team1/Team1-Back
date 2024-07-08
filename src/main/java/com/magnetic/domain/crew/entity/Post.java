@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Builder
 @Entity
+@Builder
 @Getter
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
 @AllArgsConstructor //모든 매개변수를 받는 생성자를 생성해 줍니다.
@@ -29,6 +29,8 @@ public class Post extends BaseEntity {
     private String content;
     @Column
     private String photoUrl;
+    private String category;
+    private Byte isVerified;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CrewPost> crewposts;
@@ -36,15 +38,23 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Reply> replyList;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    @OrderBy("replyId asc")
-//    private List<Reply> replies;
-
-
+    @Builder
+    public Post(Long postId, String postType, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
+        this.postId = postId;
+        this.postType = postType;
+        this.content= content;
+        this.photoUrl = photoUrl;
+        this.crewposts = crewposts;
+        this.likes = likes;
+        this.replyList = replies;
+    }
 
     public void update(UpdatePostRequestDto updatePostRequestDto) {
         postType = updatePostRequestDto.getPostType();
@@ -53,4 +63,11 @@ public class Post extends BaseEntity {
     }
 
 
+    public void verify() {
+        if (isVerified == 0) {
+            isVerified = 1;
+        } else {
+            isVerified = 0;
+        }
+    }
 }
