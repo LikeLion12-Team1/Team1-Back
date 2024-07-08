@@ -16,7 +16,7 @@ public class PostResponseDto {
 
     private Long postId;
 
-    private String postType;
+    private String category;
 
     private String nickname;
 
@@ -31,7 +31,7 @@ public class PostResponseDto {
     public static PostResponseDto from(Post post, User user) {
         return PostResponseDto.builder()
                 .postId(post.getPostId())
-                .postType(post.getPostType())
+                .category(post.getCategory())
                 .nickname(user.getNickname())
                 .content(post.getContent())
                 .photoUrl(post.getPhotoUrl())

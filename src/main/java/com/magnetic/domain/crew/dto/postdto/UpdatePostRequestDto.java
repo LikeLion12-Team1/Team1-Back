@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 public class UpdatePostRequestDto {
 
-    public String postType;
+    public String category;
 
     public String content;
 
@@ -17,8 +17,8 @@ public class UpdatePostRequestDto {
 
 
     @Builder
-    public UpdatePostRequestDto(String postType, String content, String photoUrl) {
-        this.postType = postType;
+    public UpdatePostRequestDto(String category, String content, String photoUrl) {
+        this.category = category;
         this.content= content;
         this.photoUrl = photoUrl;
     }

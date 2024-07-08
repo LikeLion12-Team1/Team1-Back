@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter//getter 메서드를 자동으로 생성-> 이를 통해 필드 값을 읽을 수 있음
 
 public class CreatePostRequestDto {
-    private String postType;
+    private String category;
 
     private String nickname;
 
@@ -22,8 +22,8 @@ public class CreatePostRequestDto {
 
     //빌더 패턴을 사용하여 객체를 생성->필드 값을 유연하게 설정
     @Builder
-    public CreatePostRequestDto(String postType, String nickname, String content, String photoUrl) {
-        this.postType = postType;
+    public CreatePostRequestDto(String category, String nickname, String content, String photoUrl) {
+        this.category = category;
         this.nickname = nickname;
         this.content= content;
         this.photoUrl = photoUrl;
@@ -33,7 +33,7 @@ public class CreatePostRequestDto {
     //Post 객체는 실제 데이터베이스에 저장될 Post 엔티티
     public Post toEntity() {
         return Post.builder()
-                .postType(postType)
+                .category(category)
                 .content(content)
                 .photoUrl(photoUrl)
                 .build();
