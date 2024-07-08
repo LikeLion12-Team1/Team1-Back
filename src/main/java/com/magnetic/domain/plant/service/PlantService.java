@@ -6,6 +6,7 @@ import com.magnetic.domain.plant.repository.PlantRepository;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.entity.UserPlant;
 import com.magnetic.domain.user.repository.UserPlantRepository;
+import com.magnetic.domain.user.repository.UserRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
 import com.magnetic.global.common.exception.handler.PlantHandler;
 import jakarta.transaction.Transactional;
@@ -21,10 +22,13 @@ public class PlantService {
 
     private final PlantRepository plantRepository;
     private final UserPlantRepository userPlantRepository;
+    private final UserRepository userRepository;
 
     public PlantResponse.PlantPreviewListDto getUnlockedPlantList(User user) {
         List<PlantResponse.PlantPreviewDto> allPlantByUser = plantRepository.findAllUnlockedPlantByUser(user);
+
         return PlantResponse.PlantPreviewListDto.builder()
+                .holdingTokens(user.getPlantToken())
                 .plantPreviewDtoList(allPlantByUser)
                 .build();
     }
@@ -47,14 +51,16 @@ public class PlantService {
     }
 
     public String unlockPlant(Long plantId, User user) {
-        //TODO 챌린지 달성 여부 확인 필요
-
+        // 토큰 지불
+        user.pay();
+        userRepository.save(user);
 
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
         UserPlant userPlant = userPlantRepository.findUserPlantByUserAndPlant(user, plant);
         userPlant.unlock();
         userPlantRepository.save(userPlant);
+
         return "해금되었습니다.";
     }
 }

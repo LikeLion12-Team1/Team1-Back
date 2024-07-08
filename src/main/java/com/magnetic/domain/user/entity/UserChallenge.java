@@ -21,6 +21,7 @@ public class UserChallenge {
 
     private String status;
     private Long verificationCount;
+    private Byte isPaidUp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -32,5 +33,9 @@ public class UserChallenge {
 
     public void verify() {
         verificationCount++;
+    }
+
+    public void paidUp() {
+        isPaidUp = 1;
     }
 }
