@@ -20,7 +20,7 @@ public class UserChallenge {
     private Long userChallengeId;
 
     private String status;
-    private Long verification;
+    private Long verificationCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -29,4 +29,8 @@ public class UserChallenge {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
+
+    public void verify() {
+        verificationCount++;
+    }
 }
