@@ -1,7 +1,7 @@
 package com.magnetic.domain.crew.entity;
 
-import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
 import com.magnetic.domain.crew.dto.request.postdto.UpdatePostRequestDto;
+import com.magnetic.domain.user.entity.User;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
-//@AllArgsConstructor //모든 매개변수를 받는 생성자를 생성해 줍니다.
+@AllArgsConstructor //모든 매개변수를 받는 생성자를 생성해 줍니다.
 
 public class Post extends BaseEntity {
     @Id
@@ -29,6 +29,8 @@ public class Post extends BaseEntity {
     private String content;
     @Column
     private String photoUrl;
+    private String category;
+    private Byte isVerified;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CrewPost> crewposts;
@@ -38,6 +40,10 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Reply> replies;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public Post(Long postId, String title, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
@@ -57,4 +63,11 @@ public class Post extends BaseEntity {
     }
 
 
+    public void verify() {
+        if (isVerified == 0) {
+            isVerified = 1;
+        } else {
+            isVerified = 0;
+        }
+    }
 }

@@ -3,8 +3,6 @@ package com.magnetic.domain.challenge.converter;
 import com.magnetic.domain.challenge.dto.ChallengeResponseDto;
 import com.magnetic.domain.challenge.entity.Challenge;
 import com.magnetic.domain.crew.entity.Crew;
-import com.magnetic.domain.user.converter.UserConverter;
-import com.magnetic.domain.user.dto.UserResponseDto;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class ChallengeConverter {
                 .build();
     }
 
-    private static ChallengeResponseDto.ChallengePreviewDto toChallengePreview(Challenge challenge) {
+    public static ChallengeResponseDto.ChallengePreviewDto toChallengePreview(Challenge challenge) {
         return ChallengeResponseDto.ChallengePreviewDto.builder()
                 .challengeId(challenge.getChallengeId())
                 .startAt(challenge.getStartAt())
@@ -26,6 +24,21 @@ public class ChallengeConverter {
                 .notice(challenge.getNotice())
                 .build();
 
+    }
+
+    public static ChallengeResponseDto.ShareCrewPreviewListDto toCrewPreviewList(List<Crew> crewList) {
+        List<ChallengeResponseDto.ShareCrewPreviewDto> crewPreviewDtoList = crewList.stream()
+                .map(ChallengeConverter::toCrewPreview).toList();
+        return ChallengeResponseDto.ShareCrewPreviewListDto.builder()
+                .shareCrewPreviewDtoList(crewPreviewDtoList)
+                .build();
+    }
+
+    public static ChallengeResponseDto.ShareCrewPreviewDto toCrewPreview(Crew crew) {
+        return ChallengeResponseDto.ShareCrewPreviewDto.builder()
+                .crewId(crew.getCrewId())
+                .crewName(crew.getName())
+                .build();
     }
 
 //    public static UserResponseDto.CrewPreview toCrewPreview(Crew crew) {

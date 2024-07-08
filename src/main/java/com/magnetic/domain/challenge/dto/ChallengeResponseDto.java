@@ -20,4 +20,15 @@ public record ChallengeResponseDto() {
             String notice,
             Long memberCount
     ) {}
+
+    @Builder
+    public record ShareCrewPreviewListDto(
+            List<ShareCrewPreviewDto> shareCrewPreviewDtoList
+    ) {}
+
+    @Builder
+    public record ShareCrewPreviewDto(
+            Long crewId,
+            String crewName
+    ) {}
 }
