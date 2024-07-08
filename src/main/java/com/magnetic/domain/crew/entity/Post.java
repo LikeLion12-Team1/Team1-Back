@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Builder
 @Entity
 @Getter
@@ -33,10 +34,11 @@ public class Post extends BaseEntity {
     private List<CrewPost> crewposts;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<User> users;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 //    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
 //    @OrderBy("replyId asc")

@@ -30,15 +30,12 @@ public class Crew extends BaseEntity {
     private Long crewCount;
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)//일대다 관계 //CascadeType.ALL-> crew 상태변화가 관련 엔티티에도 영향
-    @Builder.Default
     private List<UserCrew> userCrewList = new ArrayList<>();//userCrewList필드는 UserCrew의 엔티티 목록 저장
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
-    @Builder.Default
     private List<CrewPost> crewPostList = new ArrayList<>();//crewPostList 필드는 Crew와 관련된 CrewPost 엔티티의 목록을 저장
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
-    @Builder.Default
     private List<CrewChallenge> crewChallengeList = new ArrayList<>();//crewChallengeList 필드는 Crew와 관련된 CrewChallenge 엔티티의 목록을 저장
 
 //    @OneToMany(mappedBy = "crew")

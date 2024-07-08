@@ -10,7 +10,4 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CrewPostRepository extends JpaRepository<CrewPost, Long> {
-
-    @Query("SELECT a.post FROM CrewPost a WHERE a.crew.name = :crewName")
-    List<Post> findAllPostByCrewName(@Param("crewName") String crewName, User user);
 }
