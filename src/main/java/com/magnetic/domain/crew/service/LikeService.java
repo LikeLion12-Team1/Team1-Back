@@ -1,61 +1,63 @@
 package com.magnetic.domain.crew.service;
 
-import com.magnetic.domain.crew.dto.request.likedto.LikeRequestDto;
 import com.magnetic.domain.crew.entity.Like;
 import com.magnetic.domain.crew.entity.Post;
 import com.magnetic.domain.crew.repository.LikeRepository;
 import com.magnetic.domain.crew.repository.PostRepository;
 import com.magnetic.domain.user.entity.User;
-import com.magnetic.domain.user.repository.UserRepository;
+import com.magnetic.global.common.exception.GeneralException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor//필수 인자를 가진 생성자를 자동으로 생성
+@Transactional//이 클래스의 메서드들이 트랜잭션 처리됨
+
 public class LikeService {
 
-    private final LikeRepository likeRepository;
-    private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
 
-//    @Transactional
-//    public void insert(LikeRequestDto likeRequestDto) throws Exception {
-//
-//        User user = userRepository.findById(likeRequestDto.getUser_id())
-//                .orElseThrow(() -> new NotFoundException("Could not found member id : " + heartRequestDTO.getMemberId()));
-//
-//        Post post = postRepository.findById(likeRequestDto.getPost_id())
-//                .orElseThrow(() -> new NotFoundException("Could not found board id : " + heartRequestDTO.getBoardId()));
-//
-//        // 이미 좋아요되어있으면 에러 반환
-//        if (likeRepository.findByUserAndBoard(user, post).isPresent()) {
-//            //TODO 409에러로 변경
-//            throw new Exception();
-//        }
-//
-//        Like like = Like.builder()
-//                .post(post)
-////                .user(user)
-//                .build();
-//
-//        likeRepository.save(like);
-//    }
 
-    @Transactional
-    public void delete(LikeRequestDto likeRequestDto) {
+    //addLike 메소드는 postId와 user 객체를 받아 게시글에 좋아요를 추가하거나 취소하는 기능을 수행
+    public void addLike(Long postId, User user) {
+        Post post = postRepository.findById(postId)//postId를 사용하여 Post 엔티티를 조회
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));//만약 해당 게시글이 존재하지 않으면 예외를 던짐
 
-        User user = userRepository.findById(likeRequestDto.getUser_id())
-                .orElseThrow(() -> new NotFoundException("사용자가 존재하지 않습니다."));
+        //현재 사용자가 해당 게시글에 좋아요를 누르지 않았다면
+        if (!likeRepository.existsByUserAndPost(user, post)) {
+            likeRepository.save(new Like(user, post));//새로운 Like 엔티티를 저장
+        } else {
+            likeRepository.deleteByUserAndPost(user, post);
+        }
 
-        Post post = postRepository.findById(likeRequestDto.getPost_id())
-                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
-
-//        Like like = likeRepository.findByUserAndPost(user, post)
-//                .orElseThrow(() -> new NotFoundException("좋아요가 존재하지 않습니다."));
-//
-//        likeRepository.delete(like);
     }
 }
+
+
+    /* 채민오빠 참고 코드
+    public String like(Long postId, User user) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+                //.orElseThrow(() -> new GeneralException(ErrorStatus._NOT_FOUND_EVENT));
+
+        Optional<Like> like = LikeRepository.findByUserAndPost(user, post);
+
+        if(Like.isPresent()) {
+            likeRepository.delete(Like.get());
+            return "좋아요 취소";
+        }
+        else {
+            likeRepository.saveAndFlush(new Like(user, post));
+            return "좋아요 부여";
+        }
+    }
+
+}
+
+     */
+
 

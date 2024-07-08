@@ -1,6 +1,6 @@
 package com.magnetic.domain.crew.entity;
 
-import com.magnetic.domain.crew.dto.request.postdto.UpdatePostRequestDto;
+import com.magnetic.domain.crew.dto.postdto.UpdatePostRequestDto;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -24,7 +24,7 @@ public class Post extends BaseEntity {
     private Long postId;
 
     @Column
-    private String title;
+    private String postType;
     @Column
     private String content;
     @Column
@@ -39,25 +39,25 @@ public class Post extends BaseEntity {
     private List<Like> likes;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Reply> replies;
+    private List<Reply> replyList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Post(Long postId, String title, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
+    public Post(Long postId, String postType, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
         this.postId = postId;
-        this.title = title;
+        this.postType = postType;
         this.content= content;
         this.photoUrl = photoUrl;
         this.crewposts = crewposts;
         this.likes = likes;
-        this.replies = replies;
+        this.replyList = replies;
     }
 
     public void update(UpdatePostRequestDto updatePostRequestDto) {
-        title = updatePostRequestDto.getTitle();
+        postType = updatePostRequestDto.getPostType();
         content = updatePostRequestDto.getContent();
         photoUrl = updatePostRequestDto.getPhotoUrl();
     }

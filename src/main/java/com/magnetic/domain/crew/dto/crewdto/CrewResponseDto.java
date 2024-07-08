@@ -1,10 +1,11 @@
-package com.magnetic.domain.crew.dto.response;
+package com.magnetic.domain.crew.dto.crewdto;
 
 import com.magnetic.domain.crew.entity.Crew;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @Getter
 @Builder
@@ -22,6 +23,7 @@ public class CrewResponseDto {
     public String sports_category;
 
 
+    //Crew 객체를 받아서 CrewResponseDto 객체를 생성하고 반환
     public static CrewResponseDto from(Crew crew) {
         return CrewResponseDto.builder()
                 .crewId(crew.getCrewId())
