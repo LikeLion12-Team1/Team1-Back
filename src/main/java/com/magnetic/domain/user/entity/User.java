@@ -49,6 +49,9 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> postList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserPlant> userPlantList = new ArrayList<>();
+
     // Token
     @JsonIgnore
     @ToString.Exclude
