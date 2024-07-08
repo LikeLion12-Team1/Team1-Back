@@ -1,13 +1,14 @@
 package com.magnetic.domain.crew.controller;
 
-import com.magnetic.domain.crew.dto.request.postdto.CreatePostRequestDto;
-import com.magnetic.domain.crew.dto.request.postdto.UpdatePostRequestDto;
-import com.magnetic.domain.crew.dto.response.PostResponseDto;
+import com.magnetic.domain.crew.dto.postdto.CreatePostRequestDto;
+import com.magnetic.domain.crew.dto.postdto.UpdatePostRequestDto;
+import com.magnetic.domain.crew.dto.postdto.PostResponseDto;
 import com.magnetic.domain.crew.service.PostService;
+import com.magnetic.domain.user.entity.User;
+import com.magnetic.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,38 +23,43 @@ public class PostController {
     private final PostService postService;
 
     //게시글 생성
+
     @PostMapping
-    public ResponseEntity<PostResponseDto> createPost(@RequestBody CreatePostRequestDto createPostRequestDto) {
-        PostResponseDto postResponseDto = postService.createPost(createPostRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(postResponseDto);
+    public ApiResponse<PostResponseDto> createPost(@RequestBody CreatePostRequestDto createPostRequestDto, @AuthenticationPrincipal User user) {
+        PostResponseDto postResponseDto = postService.createPost(createPostRequestDto, user);
+        return ApiResponse.created(postResponseDto);
     }
 
-    //게시글 조회
+
+
+    //게시글 상세 조회
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long postId) {
-        PostResponseDto postResponseDto = postService.getPost(postId);
-        return ResponseEntity.ok(postResponseDto);
+    public ApiResponse<PostResponseDto> getPost(@PathVariable Long postId, @AuthenticationPrincipal User user) {
+        PostResponseDto postResponseDto = postService.getPost(postId, user);
+        return ApiResponse.onSuccess(postResponseDto);
     }
 
-    //게시글  목록 조회
-    @GetMapping("/posts/crew/{crewName}")
-    public ResponseEntity<List<PostResponseDto>> getPostsByCrewName(@PathVariable String crewName) {
-        List<PostResponseDto> posts = postService.getPostsByCrewName(crewName);
-        return ResponseEntity.ok(posts);
-    }
+//    //게시글  목록 조회
+//    @GetMapping("/posts/crew/{crewName}")
+//    public ApiResponse<List<PostResponseDto>> getPostsByCrewName(@PathVariable String crewName, @AuthenticationPrincipal User user) {
+//        List<PostResponseDto> posts = postService.getPostsByCrewName(crewName, user);
+//        return ApiResponse.onSuccess(posts);
+//    }
+
+    //게시글 타입별 조회
 
 
     //게시글 수정
     @PutMapping("/{postId}")
-    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long postId, @RequestBody UpdatePostRequestDto updatePostRequestDto) {
-        PostResponseDto postResponseDto = postService.updatePost(postId, updatePostRequestDto);
-        return ResponseEntity.ok(postResponseDto);
+    public ApiResponse<PostResponseDto> updatePost(@PathVariable Long postId, @RequestBody UpdatePostRequestDto updatePostRequestDto, @AuthenticationPrincipal User user) {
+        PostResponseDto postResponseDto = postService.updatePost(postId, updatePostRequestDto, user);
+        return ApiResponse.onSuccess(postResponseDto);
     }
 
     //게시글 삭제
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+    public ApiResponse<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
-        return ResponseEntity.noContent().build();
+        return ApiResponse.noContent();
     }
 }

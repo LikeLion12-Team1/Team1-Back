@@ -1,8 +1,8 @@
 package com.magnetic.domain.crew.service;
 
-import com.magnetic.domain.crew.dto.request.crewdto.CreateCrewRequestDto;
-import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
-import com.magnetic.domain.crew.dto.response.CrewResponseDto;
+import com.magnetic.domain.crew.dto.crewdto.CreateCrewRequestDto;
+import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
+import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
 import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.repository.CrewRepository;
 import jakarta.transaction.Transactional;

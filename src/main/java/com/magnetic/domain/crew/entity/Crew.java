@@ -1,7 +1,6 @@
 package com.magnetic.domain.crew.entity;
 
-import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
-import com.magnetic.domain.user.entity.UserChallenge;
+import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
 import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -10,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,27 +27,24 @@ public class Crew extends BaseEntity {
     private String name;
     private String region;
     private String sportsCategory;
+    private Long crewCount;
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)//일대다 관계 //CascadeType.ALL-> crew 상태변화가 관련 엔티티에도 영향
+    @Builder.Default
     private List<UserCrew> userCrewList = new ArrayList<>();//userCrewList필드는 UserCrew의 엔티티 목록 저장
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<CrewPost> crewPostList = new ArrayList<>();//crewPostList 필드는 Crew와 관련된 CrewPost 엔티티의 목록을 저장
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<CrewChallenge> crewChallengeList = new ArrayList<>();//crewChallengeList 필드는 Crew와 관련된 CrewChallenge 엔티티의 목록을 저장
 
 //    @OneToMany(mappedBy = "crew")
 //    private List<Like> likes = new ArrayList<>();
 
-    @Builder
-    public Crew(Long crewId, String name, String region, String sportsCategory, List<CrewPost> crewPostList){
-        this.crewId = crewId;
-        this.name = name;
-        this.region = region;
-        this.sportsCategory = sportsCategory;
-        this.crewPostList = crewPostList;
-    }
+
 
     //UpdateCrewRequestDto 객체를 사용하여 Crew 엔티티의 name, region, sportsCategory 필드를 업데이트
     public void update(UpdateCrewRequestDto updateCrewRequestDto) {

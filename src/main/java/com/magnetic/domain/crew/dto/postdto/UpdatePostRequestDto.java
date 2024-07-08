@@ -1,4 +1,4 @@
-package com.magnetic.domain.crew.dto.request.postdto;
+package com.magnetic.domain.crew.dto.postdto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 public class UpdatePostRequestDto {
 
-    public String title;
+    public String postType;
 
     public String content;
 
@@ -17,8 +17,8 @@ public class UpdatePostRequestDto {
 
 
     @Builder
-    public UpdatePostRequestDto(String title, String content, String photoUrl) {
-        this.title = title;
+    public UpdatePostRequestDto(String postType, String content, String photoUrl) {
+        this.postType = postType;
         this.content= content;
         this.photoUrl = photoUrl;
     }

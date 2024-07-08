@@ -1,4 +1,4 @@
-package com.magnetic.domain.crew.dto.request.postdto;
+package com.magnetic.domain.crew.dto.postdto;
 
 import com.magnetic.domain.crew.entity.*;
 import lombok.Builder;
@@ -9,17 +9,22 @@ import lombok.NoArgsConstructor;
 @Getter//getter 메서드를 자동으로 생성-> 이를 통해 필드 값을 읽을 수 있음
 
 public class CreatePostRequestDto {
-    public String title;
+    private String postType;
 
-    public String content;
+    private String nickname;
 
-    public String photoUrl;
+    private String content;
+
+    private String photoUrl;
+
+    //private String likeStatus;
 
 
     //빌더 패턴을 사용하여 객체를 생성->필드 값을 유연하게 설정
     @Builder
-    public CreatePostRequestDto(String title, String content, String photoUrl) {
-        this.title = title;
+    public CreatePostRequestDto(String postType, String nickname, String content, String photoUrl) {
+        this.postType = postType;
+        this.nickname = nickname;
         this.content= content;
         this.photoUrl = photoUrl;
     }
@@ -28,7 +33,7 @@ public class CreatePostRequestDto {
     //Post 객체는 실제 데이터베이스에 저장될 Post 엔티티
     public Post toEntity() {
         return Post.builder()
-                .title(title)
+                .postType(postType)
                 .content(content)
                 .photoUrl(photoUrl)
                 .build();

@@ -1,4 +1,4 @@
-package com.magnetic.domain.crew.dto.response;
+package com.magnetic.domain.crew.dto.likedto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

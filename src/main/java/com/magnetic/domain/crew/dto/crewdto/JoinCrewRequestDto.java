@@ -1,4 +1,4 @@
-package com.magnetic.domain.crew.dto.request.crewdto;
+package com.magnetic.domain.crew.dto.crewdto;
 
 import lombok.Builder;
 import lombok.Getter;

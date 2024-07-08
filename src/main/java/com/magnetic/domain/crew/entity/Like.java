@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
 
+
 @Table(name = "post_like")
 public class Like {
     @Id
@@ -31,3 +32,31 @@ public class Like {
 
 
 }
+
+
+
+/* 채민오빠 참고 코드
+public class Like {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long likeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="post_id")
+    private Post post;
+
+    public Like(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
+
+    public static boolean isPresent() {
+    }
+
+
+}
+
+ */

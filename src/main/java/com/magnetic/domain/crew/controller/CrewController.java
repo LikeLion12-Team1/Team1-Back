@@ -1,8 +1,8 @@
 package com.magnetic.domain.crew.controller;
 
-import com.magnetic.domain.crew.dto.request.crewdto.CreateCrewRequestDto;
-import com.magnetic.domain.crew.dto.request.crewdto.UpdateCrewRequestDto;
-import com.magnetic.domain.crew.dto.response.CrewResponseDto;
+import com.magnetic.domain.crew.dto.crewdto.CreateCrewRequestDto;
+import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
+import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
 import com.magnetic.domain.crew.service.CrewService;
 import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
