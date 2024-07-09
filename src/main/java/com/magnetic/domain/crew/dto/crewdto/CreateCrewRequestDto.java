@@ -19,14 +19,14 @@ public class CreateCrewRequestDto {
     //크루 스포츠 카테고리
     public String sportsCategory;
 
-    private LocalDate createdAt;
+    //private LocalDate createdAt;
 
     @Builder//Builder 패턴을 사용하여 객체를 생성
     public CreateCrewRequestDto(String name, String region, String sportsCategory, LocalDate createdAt){
         this.name = name;
         this.region = region;
         this.sportsCategory = sportsCategory;
-        this.createdAt = createdAt;
+        //this.createdAt = createdAt;
     }
 
 

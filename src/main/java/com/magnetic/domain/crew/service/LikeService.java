@@ -38,26 +38,6 @@ public class LikeService {
 }
 
 
-    /* 채민오빠 참고 코드
-    public String like(Long postId, User user) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-                //.orElseThrow(() -> new GeneralException(ErrorStatus._NOT_FOUND_EVENT));
 
-        Optional<Like> like = LikeRepository.findByUserAndPost(user, post);
-
-        if(Like.isPresent()) {
-            likeRepository.delete(Like.get());
-            return "좋아요 취소";
-        }
-        else {
-            likeRepository.saveAndFlush(new Like(user, post));
-            return "좋아요 부여";
-        }
-    }
-
-}
-
-     */
 
 

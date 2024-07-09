@@ -20,22 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 public class LikeController {
 
-    private final UserService userService;
     private final LikeService likeService;
-    private final UserRepository userRepository;
-
 
     @PostMapping("push/{postId}")
-    public ResponseEntity<ApiResponse<Void>> addLike(@PathVariable("postId")@Positive Long postId,
-                                                     @AuthenticationPrincipal String email ) {
-        //이메일을 불러옴
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("해당 이메일을 가진 사용자가 존재하지 않습니다."));
-
+    public ApiResponse<Void> addLike(@PathVariable Long postId, @AuthenticationPrincipal User user) {
         //id 랑 유저 추가
         likeService.addLike(postId, user);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.created(null));
+        return ApiResponse.onSuccess(null);
     }
 
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Builder
@@ -14,13 +16,15 @@ import lombok.NoArgsConstructor;
 
 public class CrewResponseDto {
 
-    public Long crewId;
+    private Long crewId;
 
-    public String name;
+    private String name;
 
-    public String region;
+    private String region;
 
-    public String sports_category;
+    private String sportsCategory;
+
+    private LocalDateTime createdAt;
 
 
     //Crew 객체를 받아서 CrewResponseDto 객체를 생성하고 반환
@@ -29,7 +33,8 @@ public class CrewResponseDto {
                 .crewId(crew.getCrewId())
                 .name(crew.getName())
                 .region(crew.getRegion())
-                .sports_category(crew.getSportsCategory())
+                .createdAt(crew.getCreatedAt())
+                .sportsCategory(crew.getSportsCategory())
                 .build();
     }
 
