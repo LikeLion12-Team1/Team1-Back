@@ -38,8 +38,6 @@ public class Crew extends BaseEntity {
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
     private List<CrewChallenge> crewChallengeList = new ArrayList<>();//crewChallengeList 필드는 Crew와 관련된 CrewChallenge 엔티티의 목록을 저장
 
-//    @OneToMany(mappedBy = "crew")
-//    private List<Like> likes = new ArrayList<>();
 
 
 

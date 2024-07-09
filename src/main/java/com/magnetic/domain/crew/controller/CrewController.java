@@ -21,6 +21,7 @@ public class CrewController {
     private final CrewService crewService;
 
     // 크루 생성
+    @Operation(summary = "크루 생성", description = "크루 생성하기")
     @PostMapping
     //createCrew 메서드는 CreateCrewRequestDto 타입의 객체를 입력으로 받음
     // @RequestBody 어노테이션은 HTTP 요청 본문에서 데이터를 읽어와 createCrewRequestDto 객체에 매핑
@@ -32,6 +33,7 @@ public class CrewController {
 
 
     //크루 전체 조회
+    @Operation(summary = "크루 전체 조회", description = "모든 크루 조회")
     @GetMapping//HTTP GET 요청을 처리하는 메서드
     //반환 타입은 ApiResponse<List<CrewResponseDto>>
     public ApiResponse<List<CrewResponseDto>> getAllCrews() {
@@ -40,6 +42,7 @@ public class CrewController {
     }
 
     //크루 지역별 조회
+    @Operation(summary = "크루 지역별 조회", description = "지역별로 크루 조회하기")
     @GetMapping("/region")
     //region 파라미터를 받아서 해당 지역의 크루 정보를 조회
     //조회 결과는 CrewResponseDto 객체의 리스트로 반환
@@ -49,6 +52,7 @@ public class CrewController {
     }
 
     //크루 스포츠 카테고리별 조회
+    @Operation(summary = "크루 스포츠 카테고리별 조회", description = "스포츠 카테고리별로 크루 조회하기")
     @GetMapping("/sports-category")
     public ApiResponse<List<CrewResponseDto>> getCrewsBySportsCategory(@RequestParam String sportsCategory) {
         List<CrewResponseDto> crews = crewService.getCrewsBySportsCategory(sportsCategory);
@@ -56,6 +60,7 @@ public class CrewController {
     }
 
     //특정 크루 정보 조회
+    @Operation(summary = "특정 크루 조회", description = "크루 아이디로 특정 크루 상세정보 조회")
     @GetMapping("/{crewId}")
     public ApiResponse<CrewResponseDto> getCrew(@PathVariable Long crewId){
         CrewResponseDto crewResponseDto = crewService.getCrew(crewId);
@@ -64,6 +69,7 @@ public class CrewController {
 
 
     // 크루 수정
+    @Operation(summary = "크루 수정", description = "크루 수정하기")
     @PatchMapping("/{crewId}")
     //@PathVariable은 URL에서 {crewId} 변수의 값을 가져옴
     //@RequestBody는 요청 본문에서 UpdateCrewRequestDto 객체를 가져옴
@@ -75,6 +81,7 @@ public class CrewController {
     }
 
     // 크루 삭제
+    @Operation(summary = "크루 삭제", description = "크루 삭제하기")
     @DeleteMapping("/{crewId}")
     //요청 URL에서 {crewId} 부분의 값을 받아 crewId 변수에 저장
     //ApiResponse<Void> 타입의 응답을 반환
