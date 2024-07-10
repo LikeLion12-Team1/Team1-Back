@@ -43,6 +43,9 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Report> reportList;
+
     @Builder
     public Post(Long postId, String category, String content, String photoUrl, List<CrewPost> crewposts, List<Like> likes, List<Reply> replies) {
         this.postId = postId;
