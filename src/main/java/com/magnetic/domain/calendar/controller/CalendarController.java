@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/calendar")
+@CrossOrigin("*")
 public class CalendarController {
 
     private final CalendarService calendarService;

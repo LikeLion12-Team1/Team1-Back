@@ -22,6 +22,7 @@ import static com.magnetic.domain.crew.entity.QCrew.crew;
 @RestController//REST API 컨트롤러임
 @RequiredArgsConstructor//Lombok 라이브러리를 사용하여 생성자 주입 방식으로 의존성을 주입
 @RequestMapping("api/v1/crews")//이 컨트롤러의 기본 URL 경로를 지정
+@CrossOrigin("*")
 public class CrewController {
 
     private final CrewService crewService;
