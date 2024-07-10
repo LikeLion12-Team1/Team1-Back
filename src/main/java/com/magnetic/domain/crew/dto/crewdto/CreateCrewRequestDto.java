@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
 @Getter//Getter 메서드를 자동으로 생성-> 이를 통해 필드의 값을 가져올 수 있음
 
@@ -31,11 +30,13 @@ public class CreateCrewRequestDto {
 
 
     //CreateCrewRequestDto 객체를 Crew 엔티티로 변환
+    //크루 생성 요청에 사용
     public Crew toEntity() {
         return Crew.builder()
                 .name(name)
                 .region(region)
                 .sportsCategory(sportsCategory)
+                .createdAt(LocalDate.now())
                 .build();
     }
 

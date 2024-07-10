@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class CreatePostRequestDto {
     private String category;
 
-    private String nickname;
+    //private String nickname;
 
     private String content;
 
@@ -22,9 +22,8 @@ public class CreatePostRequestDto {
 
     //빌더 패턴을 사용하여 객체를 생성->필드 값을 유연하게 설정
     @Builder
-    public CreatePostRequestDto(String category, String nickname, String content, String photoUrl) {
+    public CreatePostRequestDto(String category, String content, String photoUrl) {
         this.category = category;
-        this.nickname = nickname;
         this.content= content;
         this.photoUrl = photoUrl;
     }

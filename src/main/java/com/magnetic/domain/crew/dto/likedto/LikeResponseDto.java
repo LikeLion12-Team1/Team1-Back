@@ -1,5 +1,6 @@
 package com.magnetic.domain.crew.dto.likedto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +14,8 @@ import lombok.NoArgsConstructor;
 
 public class LikeResponseDto {
 
-    public Long userId;
+    private boolean isLiked;
 
-    public Long postId;
-
+    private String message;
 
 }

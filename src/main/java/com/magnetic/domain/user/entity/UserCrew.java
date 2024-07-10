@@ -27,6 +27,8 @@ public class UserCrew extends BaseEntity {
 
     private LocalDate inactiveDate;
 
+    private LocalDate joinedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
