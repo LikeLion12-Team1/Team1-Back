@@ -8,6 +8,7 @@ public record PlantResponse() {
 
     @Builder
     public record PlantPreviewListDto(
+            Long holdingTokens,
             List<PlantPreviewDto> plantPreviewDtoList
     ) {
     }

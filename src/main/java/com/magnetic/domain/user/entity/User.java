@@ -39,6 +39,7 @@ public class User extends BaseEntity implements UserDetails {
     private String nickname;
     private String region;
     private Role role;
+    private Long plantToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCrew> userCrews = new ArrayList<>();
@@ -90,5 +91,13 @@ public class User extends BaseEntity implements UserDetails {
     public void updateProfile(UserRequestDto.Profile request) {
         nickname = request.nickname();
         region = request.region();
+    }
+
+    public void receiveToken() {
+        plantToken++;
+    }
+
+    public void pay() {
+        plantToken--;
     }
 }

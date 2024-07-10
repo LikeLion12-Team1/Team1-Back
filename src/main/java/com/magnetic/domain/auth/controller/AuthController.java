@@ -4,26 +4,22 @@ import com.magnetic.domain.auth.dto.AuthRequestDto;
 import com.magnetic.domain.auth.dto.AuthResponseDto;
 import com.magnetic.domain.auth.dto.RegisterRequestDto;
 import com.magnetic.domain.auth.service.AuthService;
-import com.magnetic.domain.email.service.EmailService;
 import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     private final AuthService authService;
-    private final EmailService emailService;
 
     @Operation(summary = "회원가입", description = "회원가입")
     @PostMapping("/register")

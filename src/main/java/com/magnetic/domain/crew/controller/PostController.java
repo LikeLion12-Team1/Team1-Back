@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
-
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
@@ -40,15 +40,6 @@ public class PostController {
         PostResponseDto postResponseDto = postService.getPost(postId, user);
         return ApiResponse.onSuccess(postResponseDto);
     }
-
-//    //게시글  목록 조회
-//    @GetMapping("/posts/crew/{crewName}")
-//    public ApiResponse<List<PostResponseDto>> getPostsByCrewName(@PathVariable String crewName, @AuthenticationPrincipal User user) {
-//        List<PostResponseDto> posts = postService.getPostsByCrewName(crewName, user);
-//        return ApiResponse.onSuccess(posts);
-//    }
-
-    //게시글 타입별 조회
 
 
     //게시글 수정

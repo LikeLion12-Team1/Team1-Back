@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/plants")
+@CrossOrigin("*")
 public class PlantController {
 
     private final PlantService plantService;
 
-    @Operation(summary = "식물 목록 조회",
-            description = "해금된 식물과 해금되지 않은 식물 확인, 해금 = 1, 해금 X = 0")
+    @Operation(summary = "식물 목록 조회, 사용자 보유 토큰 수 조회",
+            description = "사용자 보유 토큰 수 조회, 해금된 식물과 해금되지 않은 식물 확인, 해금 = 1, 해금 X = 0")
     @GetMapping("")
     public ApiResponse<PlantResponse.PlantPreviewListDto> getPlantList(
             @AuthenticationPrincipal User user

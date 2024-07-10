@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user/my")
+@CrossOrigin("*")
 public class MyPageController {
 
     private final MyPageService myPageService;
@@ -22,6 +23,15 @@ public class MyPageController {
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(myPageService.getMyPage(user));
+    }
+
+    @Operation(summary = "마이 페이지 토큰 수령", description = "챌린지를 완료하고 보상을 수령")
+    @PostMapping("/{challenge_id}")
+    public ApiResponse<String> receiveToken(
+            @AuthenticationPrincipal User user,
+            @PathVariable("challenge_id") Long challengeId
+    ) {
+        return ApiResponse.onSuccess(myPageService.doneChallenge(user, challengeId));
     }
 
     @Operation(summary = "관리자: 마이크루 페이지 조회", description = "관리자 마이크루 페이지에서 해당 크루 멤버 목록, 커뮤니티 알림 목록 조회")

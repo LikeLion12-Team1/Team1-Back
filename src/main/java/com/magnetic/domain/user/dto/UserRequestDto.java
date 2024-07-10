@@ -1,5 +1,7 @@
 package com.magnetic.domain.user.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 public record UserRequestDto() {
@@ -11,7 +13,7 @@ public record UserRequestDto() {
     ) {}
 
     public record ProfileImg(
-            String profileImg
+            MultipartFile profileImg
     ) {}
 
     public record UpdateUserPasswordDto(

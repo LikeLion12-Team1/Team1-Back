@@ -19,6 +19,7 @@ public enum ErrorStatus implements BaseErrorCode {
     // User 에러
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "USER400", "사용자가 존재하지 않습니다."),
     _INVALID_USER(HttpStatus.BAD_REQUEST, "USER401" , "아이디 또는 비밀번호가 틀렸습니다."),
+    _NOT_FOUND_USER_CREW(HttpStatus.BAD_REQUEST, "USER402", "해당 사용자가 크루에 속하고 있지 않습니다."),
 
     // Crew 에러
     _NOT_FOUND_CREW(HttpStatus.NOT_FOUND, "CREW400", "해당 크루가 존재하지 않습니다."),
@@ -27,6 +28,7 @@ public enum ErrorStatus implements BaseErrorCode {
     // Challenge 에러
     _NOT_FOUND_CHALLENGE(HttpStatus.NOT_FOUND, "CHALLENGE400", "해당 챌린지가 존재하지 않습니다."),
     _NOT_CHALLENGING(HttpStatus.NOT_FOUND, "CHALLENGE401", "챌린지 수행중이 아닙니다."),
+    _ALREADY_PAID(HttpStatus.BAD_REQUEST, "CHALLENGE402", "이미 보상을 수령한 챌린지입니다."),
 
     // Plant 에러
     _NOT_FOUND_PLANT(HttpStatus.NOT_FOUND, "PLANT400", "해당 플랜트가 존재하지 않습니다."),

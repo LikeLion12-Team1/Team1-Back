@@ -31,6 +31,7 @@ public class Crew {
     private Long crewCount;
     private LocalDate createdAt;
     private LocalDate joinedAt;
+    private String crewImg;
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)//일대다 관계 //CascadeType.ALL-> crew 상태변화가 관련 엔티티에도 영향
     private List<UserCrew> userCrewList = new ArrayList<>();//userCrewList필드는 UserCrew의 엔티티 목록 저장
@@ -41,8 +42,6 @@ public class Crew {
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
     private List<CrewChallenge> crewChallengeList = new ArrayList<>();//crewChallengeList 필드는 Crew와 관련된 CrewChallenge 엔티티의 목록을 저장
 
-
-
     //UpdateCrewRequestDto 객체를 사용하여 Crew 엔티티의 name, region, sportsCategory 필드를 업데이트
     public void update(UpdateCrewRequestDto updateCrewRequestDto) {
         name = updateCrewRequestDto.getName();
@@ -52,5 +51,9 @@ public class Crew {
 
     public void increaseMemberCount() {
         crewCount++;
+    }
+
+    public void setImage(String newImageUrl) {
+        crewImg = newImageUrl;
     }
 }
