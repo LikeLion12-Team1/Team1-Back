@@ -58,6 +58,16 @@ public class UserController {
         return ApiResponse.onSuccess("탈퇴 완료");
     }
 
+    @Operation(summary = "email 중복 확인", description = "URI에 검사할 email 명시")
+    @GetMapping("/check-email/{email}")
+    public ApiResponse<String> emailDuplicate(@PathVariable("email") String email) {
+        if (userService.emailExist(email)) {
+            return ApiResponse.onSuccess("이미 존재하는 이메일입니다.");
+        } else {
+            return ApiResponse.onSuccess("해당 이메일을 사용할 수 있습니다.");
+        }
+    }
+
     @Operation(summary = "nickname 중복 확인", description = "URI에 검사할 nickname 명시")
     @GetMapping("/check/{nickname}")
     public ApiResponse<String> nicknameDuplicate(@PathVariable("nickname") String nickname) {

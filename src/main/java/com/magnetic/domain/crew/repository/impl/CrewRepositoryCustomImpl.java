@@ -4,6 +4,7 @@ import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
 import com.magnetic.domain.crew.entity.QCrew;
 import com.magnetic.domain.crew.repository.CrewRepositoryCustom;
 import com.magnetic.domain.user.entity.QUserCrew;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,15 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
     public List<CrewResponseDto> findAllCrew(String region, String category) {
         QCrew crew = QCrew.crew;
         QUserCrew userCrew = QUserCrew.userCrew;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (region != null && !region.isEmpty()) {
+            builder.and(crew.region.eq(region));
+        }
+
+        if (category != null && !category.isEmpty()) {
+            builder.and(crew.sportsCategory.eq(category));
+        }
 
         return queryFactory
                 .select(Projections.constructor(CrewResponseDto.class,
@@ -32,6 +42,7 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
                         crew.createdAt,
                         userCrew.count()))
                 .from(crew).leftJoin(userCrew).on(crew.crewId.eq(userCrew.crew.crewId))
+                .where(builder)
                 .orderBy(crew.crewId.desc())
                 .fetch();
     }
