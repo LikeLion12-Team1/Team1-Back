@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user/my")
+@CrossOrigin("*")
 public class MyPageController {
 
     private final MyPageService myPageService;
