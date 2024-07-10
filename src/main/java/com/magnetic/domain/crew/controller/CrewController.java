@@ -1,9 +1,6 @@
 package com.magnetic.domain.crew.controller;
 
-import com.magnetic.domain.crew.dto.crewdto.CreateCrewRequestDto;
-import com.magnetic.domain.crew.dto.crewdto.JoinCrewDto;
-import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
-import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
+import com.magnetic.domain.crew.dto.crewdto.*;
 import com.magnetic.domain.crew.service.CrewService;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.global.common.ApiResponse;
@@ -42,8 +39,7 @@ public class CrewController {
 
     //크루 전체 조회
     @Operation(summary = "크루 전체 조회", description = "모든 크루 조회")
-    @GetMapping//HTTP GET 요청을 처리하는 메서드
-    //반환 타입은 ApiResponse<List<CrewResponseDto>>
+    @GetMapping
     public ApiResponse<List<CrewResponseDto>> getAllCrews(
             @RequestParam(value = "region", required = false) String region,
             @RequestParam(value = "sports-category", required = false) String category
@@ -71,19 +67,18 @@ public class CrewController {
 
     //특정 크루 정보 조회
     @Operation(summary = "특정 크루 조회", description = "크루 아이디로 특정 크루 상세정보 조회")
-    @GetMapping("/{crewId}")
-    public ApiResponse<CrewResponseDto> getCrew(@PathVariable Long crewId){
-        CrewResponseDto crewResponseDto = crewService.getCrew(crewId);
-        return ApiResponse.onSuccess(crewResponseDto);
+    @GetMapping("/{crew_id}")
+    public ApiResponse<CrewCustomResponse.Preview> getCrew(@PathVariable("crew_id") Long crewId){
+        return ApiResponse.onSuccess(crewService.getCrew(crewId));
     }
 
 
     // 크루 수정
     @Operation(summary = "크루 수정", description = "크루 수정하기")
-    @PatchMapping("/{crewId}")
+    @PatchMapping("/{crew_id}")
     //@PathVariable은 URL에서 {crewId} 변수의 값을 가져옴
     //@RequestBody는 요청 본문에서 UpdateCrewRequestDto 객체를 가져옴
-    public ApiResponse<CrewResponseDto> updateCrew(@PathVariable Long crewId,
+    public ApiResponse<CrewResponseDto> updateCrew(@PathVariable("crew_id") Long crewId,
                                                    @RequestBody UpdateCrewRequestDto updateCrewRequestDto) {
         CrewResponseDto crewResponseDto = crewService.updateCrew(crewId, updateCrewRequestDto);
         //crewService의 updateCrew 메서드를 호출하여 Crew 리소스를 업데이트
@@ -93,10 +88,10 @@ public class CrewController {
 
     // 크루 삭제
     @Operation(summary = "크루 삭제", description = "크루 삭제하기")
-    @DeleteMapping("/{crewId}")
+    @DeleteMapping("/{crew_id}")
     //요청 URL에서 {crewId} 부분의 값을 받아 crewId 변수에 저장
     //ApiResponse<Void> 타입의 응답을 반환
-    public ApiResponse<Void> deleteCrew(@PathVariable Long crewId) {
+    public ApiResponse<Void> deleteCrew(@PathVariable("crew_id") Long crewId) {
         crewService.deleteCrew(crewId);//crewService 객체의 deleteCrew() 메서드를 호출하여 해당 crewId의 크루를 삭제
         return ApiResponse.noContent();
     }
@@ -113,8 +108,8 @@ public class CrewController {
 
     //크루 가입
     @Operation(summary = "크루 가입", description = "크루 가입하기")
-    @PostMapping("/join/{crewId}")
-    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable Long crewId, @AuthenticationPrincipal User user){
+    @PostMapping("/join/{crew_id}")
+    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user){
         JoinCrewDto joinCrewDto = crewService.joinCrew(crewId, user);
         return ApiResponse.onSuccess(joinCrewDto);
     }
