@@ -28,9 +28,6 @@ public class CrewResponseDto {
 
     private LocalDate createdAt;
 
-    private Long userCount;
-
-
     //Crew 객체를 받아서 CrewResponseDto 객체를 생성하고 반환
     public static CrewResponseDto from(Crew crew) {
         return CrewResponseDto.builder()
