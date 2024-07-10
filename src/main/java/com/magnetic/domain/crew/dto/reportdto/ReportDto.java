@@ -1,12 +1,17 @@
 package com.magnetic.domain.crew.dto.reportdto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Getter
+@Builder
+@NoArgsConstructor
+//@AllArgsConstructor
 public class ReportDto {
-
-    private Long reportId;
 
     private String reportReason;
 
@@ -16,7 +21,6 @@ public class ReportDto {
 
     private LocalDate reportedAt;
 
-    @Builder
     public ReportDto(String reportReason, Long postId, Long userId, LocalDate reportedAt) {
         this.reportReason = reportReason;
         this.postId = postId;
