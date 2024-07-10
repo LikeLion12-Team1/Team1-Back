@@ -39,8 +39,7 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
                         crew.name,
                         crew.region,
                         crew.sportsCategory,
-                        crew.createdAt,
-                        userCrew.count()))
+                        crew.createdAt))
                 .from(crew).leftJoin(userCrew).on(crew.crewId.eq(userCrew.crew.crewId))
                 .where(builder)
                 .orderBy(crew.crewId.desc())
