@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
 @Getter
 @Setter
-
 public class JoinCrewDto {
 
     private Long userId;

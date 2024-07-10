@@ -70,7 +70,7 @@ public class UserService {
         Uuid savedUuid = uuidRepository.save(Uuid.builder()
                 .uuid(uuid).build());
 
-        String pictureUrl = s3Manager.uploadFile(s3Manager.generateProfileImage(savedUuid), file);
+        String pictureUrl = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
 
         user.setProfileImg(pictureUrl);
         userRepository.save(user);

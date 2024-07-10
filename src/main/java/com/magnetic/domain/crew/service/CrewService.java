@@ -9,14 +9,19 @@ import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.domain.user.repository.UserCrewRepository;
+import com.magnetic.s3.S3Manager;
+import com.magnetic.s3.entity.Uuid;
+import com.magnetic.s3.repository.UuidRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,10 +31,20 @@ import java.util.stream.Collectors;
 public class CrewService {
     private final CrewRepository crewRepository;//크루 관련 데이터 액세스를 위한 리포지토리 인터페이스를 주입
     private final UserCrewRepository userCrewRepository;
+    private final UuidRepository uuidRepository;
+    private final S3Manager s3Manager;
 
     // 크루 생성
-    public CrewResponseDto createCrew(CreateCrewRequestDto createCrewRequestDto) {
+    public CrewResponseDto createCrew(CreateCrewRequestDto createCrewRequestDto, MultipartFile file) {
+        String uuid = UUID.randomUUID().toString();
+        Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                .uuid(uuid).build());
+
+        String url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
+
         Crew crew = createCrewRequestDto.toEntity();//CreateCrewRequestDto 객체에서 Crew 객체를 생성
+        crew.setCrewImg(url);
+
         Crew savedCrew = crewRepository.save(crew);//crewRepository에 crew 객체를 저장하고, 저장된 객체를 savedCrew에 할당
         return CrewResponseDto.from(savedCrew);//Crew 객체를 CrewResponseDto 객체로 변환하여 반환
     }
