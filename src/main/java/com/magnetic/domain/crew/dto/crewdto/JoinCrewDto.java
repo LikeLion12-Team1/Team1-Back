@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor //매개변수 없는 생성자를 생성해 줍니다.
 @Getter
 @Setter
+@Builder
 
 public class JoinCrewDto {
 
@@ -21,7 +22,7 @@ public class JoinCrewDto {
 
     private LocalDate joinedAt;
 
-    @Builder
+
     public JoinCrewDto(Long userId, Long crewId, Long crewCount, LocalDate joinedAt) {
         this.userId = userId;
         this.crewId= crewId;
