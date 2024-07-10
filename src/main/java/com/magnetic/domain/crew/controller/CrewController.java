@@ -1,21 +1,27 @@
 package com.magnetic.domain.crew.controller;
 
 import com.magnetic.domain.crew.dto.crewdto.CreateCrewRequestDto;
+import com.magnetic.domain.crew.dto.crewdto.JoinCrewDto;
 import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
 import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
 import com.magnetic.domain.crew.service.CrewService;
+import com.magnetic.domain.user.entity.User;
 import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.magnetic.domain.crew.entity.QCrew.crew;
+
 @Slf4j//Lombok 라이브러리를 사용하여 로깅 기능을 제공
 @RestController//REST API 컨트롤러임
 @RequiredArgsConstructor//Lombok 라이브러리를 사용하여 생성자 주입 방식으로 의존성을 주입
-@RequestMapping("/crews")//이 컨트롤러의 기본 URL 경로를 지정
+@RequestMapping("api/v1/crews")//이 컨트롤러의 기본 URL 경로를 지정
 public class CrewController {
 
     private final CrewService crewService;
@@ -98,6 +104,14 @@ public class CrewController {
         } else {
             return ApiResponse.onSuccess("해당 크루 이름을 사용할 수 있습니다.");
         }
+    }
+
+    //크루 가입
+    @Operation(summary = "크루 가입", description = "크루 가입하기")
+    @PostMapping("/join/{crewId}")
+    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable Long crewId, @AuthenticationPrincipal User user){
+        JoinCrewDto joinCrewDto = crewService.joinCrew(crewId, user);
+        return ApiResponse.onSuccess(joinCrewDto);
     }
 }
 

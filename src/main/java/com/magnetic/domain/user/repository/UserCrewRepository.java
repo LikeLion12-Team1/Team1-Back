@@ -36,4 +36,11 @@ public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
     List<Crew> findAllCrewByUserAndChallenge(@Param("user") User user, @Param("challengeId") Long challengeId);
 
     Optional<UserCrew> findByUserAndCrew(User kickMember, Crew crew);
+
+    //크루 가입에 사용
+    @Query("SELECT a " +
+            "FROM UserCrew a " +
+            "WHERE a.user.userId = :userId AND a.crew.crewId = :crewId")
+    Optional<UserCrew> findByUserIdAndCrewId(@Param("userId") Long userId, @Param("crewId") Long crewId);
 }
+

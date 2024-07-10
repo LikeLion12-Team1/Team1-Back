@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Getter
@@ -24,7 +24,7 @@ public class CrewResponseDto {
 
     private String sportsCategory;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 
     //Crew 객체를 받아서 CrewResponseDto 객체를 생성하고 반환
