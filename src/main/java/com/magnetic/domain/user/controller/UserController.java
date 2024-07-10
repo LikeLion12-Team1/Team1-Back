@@ -5,10 +5,14 @@ import com.magnetic.domain.user.dto.UserResponseDto;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.service.UserService;
 import com.magnetic.global.common.ApiResponse;
+import com.magnetic.s3.S3Manager;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final S3Manager fileService;
 
     @Operation(summary = "프로필 조회", description = "닉네임, 프로필 사진, 활동 지역, 소속 크루 조회")
     @GetMapping("/profile")
@@ -34,14 +39,15 @@ public class UserController {
         return ApiResponse.onSuccess(userService.updateProfile(request, user));
     }
 
-//    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
-//    @PostMapping("/profile-image")
-//    public ApiResponse<UserResponseDto.ProfilePreview> updateProfileImg(
-//            @RequestBody UserRequestDto.ProfileImg request,
-//            @AuthenticationPrincipal User user
-//    ) {
-//        return ApiResponse.onSuccess(userService.updateProfileImg(request, user));
-//    }
+    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
+    @PostMapping(value = "/profile-image")
+    public ApiResponse<String> updateProfileImg(
+            @RequestParam("file") MultipartFile multipartFile,
+            @AuthenticationPrincipal User user
+    ) throws IOException {
+        userService.updateProfileImg(multipartFile, user);
+        return ApiResponse.onSuccess("프로필 사진 업데이트 완료");
+    }
 
     @Operation(summary = "소속 크루 탈퇴", description = "URI에 탈퇴할 크루명 명시")
     @DeleteMapping("/profile/{crew_name}")

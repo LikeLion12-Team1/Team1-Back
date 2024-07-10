@@ -27,6 +27,7 @@ public enum ErrorStatus implements BaseErrorCode {
     // Challenge 에러
     _NOT_FOUND_CHALLENGE(HttpStatus.NOT_FOUND, "CHALLENGE400", "해당 챌린지가 존재하지 않습니다."),
     _NOT_CHALLENGING(HttpStatus.NOT_FOUND, "CHALLENGE401", "챌린지 수행중이 아닙니다."),
+    _ALREADY_PAID(HttpStatus.BAD_REQUEST, "CHALLENGE402", "이미 보상을 수령한 챌린지입니다."),
 
     // Plant 에러
     _NOT_FOUND_PLANT(HttpStatus.NOT_FOUND, "PLANT400", "해당 플랜트가 존재하지 않습니다."),

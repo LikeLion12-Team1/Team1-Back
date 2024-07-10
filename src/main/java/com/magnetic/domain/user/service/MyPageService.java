@@ -94,4 +94,27 @@ public class MyPageService {
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
+
+    public String doneChallenge(User user, Long challengeId) {
+        Challenge challenge = challengeRepository.findById(challengeId)
+                .orElseThrow(() -> new ChallengeHandler(ErrorStatus._NOT_FOUND_CHALLENGE));
+        Long requireCount = challenge.getRequiredVerification();
+
+        UserChallenge userChallenge = userChallengeRepository.findByUserAndChallengeOnChallenging(user, challenge)
+                .orElseThrow(() -> new ChallengeHandler(ErrorStatus._ALREADY_PAID));
+        Long verificationCount = userChallenge.getVerificationCount();
+
+        if (requireCount >= verificationCount) {
+            userChallenge.paidUp();
+            userChallengeRepository.save(userChallenge);
+
+            user.receiveToken();
+            userRepository.save(user);
+
+            return "챌린지 달성 보상이 지급되었습니다.";
+        } else {
+            return "챌린지를 아직 달성하지 못했습니다.";
+        }
+
+    }
 }

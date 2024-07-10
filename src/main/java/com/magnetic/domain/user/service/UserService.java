@@ -12,12 +12,17 @@ import com.magnetic.domain.user.repository.UserCrewRepository;
 import com.magnetic.domain.user.repository.UserRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
 import com.magnetic.global.common.exception.handler.UserHandler;
+import com.magnetic.s3.S3Manager;
+import com.magnetic.s3.entity.Uuid;
+import com.magnetic.s3.repository.UuidRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +32,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
     private final UserCrewRepository userCrewRepository;
+    private final UuidRepository uuidRepository;
+    private final S3Manager s3Manager;
 
     public boolean emailExist(String email) {
         return userRepository.existsByEmail(email);
@@ -57,10 +64,17 @@ public class UserService {
         return UserConverter.toProfilePreviewDto(updatedUser, crewList);
     }
 
-//    public UserResponseDto.ProfilePreview updateProfileImg(UserRequestDto.ProfileImg request, User user) {
-//
-//
-//    }
+    public void updateProfileImg(MultipartFile file, User user) {
+
+        String uuid = UUID.randomUUID().toString();
+        Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                .uuid(uuid).build());
+
+        String pictureUrl = s3Manager.uploadFile(s3Manager.generateProfileImage(savedUuid), file);
+
+        user.setProfileImg(pictureUrl);
+        userRepository.save(user);
+    }
 
     public boolean nicknameDuplicate(String nickname) {
         return userRepository.existsByNickname(nickname);
