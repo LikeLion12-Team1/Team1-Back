@@ -2,15 +2,18 @@ package com.magnetic.domain.user.service;
 
 import com.magnetic.domain.auth.service.AuthService;
 import com.magnetic.domain.crew.entity.Crew;
+import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.email.dto.EmailRequestDto;
 import com.magnetic.domain.email.dto.EmailResponseDto;
 import com.magnetic.domain.user.converter.UserConverter;
 import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.dto.UserResponseDto;
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.domain.user.repository.UserCrewRepository;
 import com.magnetic.domain.user.repository.UserRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
+import com.magnetic.global.common.exception.handler.CrewHandler;
 import com.magnetic.global.common.exception.handler.UserHandler;
 import com.magnetic.s3.S3Manager;
 import com.magnetic.s3.entity.Uuid;
@@ -32,6 +35,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
     private final UserCrewRepository userCrewRepository;
+    private final CrewRepository crewRepository;
     private final UuidRepository uuidRepository;
     private final S3Manager s3Manager;
 
@@ -81,7 +85,12 @@ public class UserService {
     }
 
     public void inactiveCrew(User user, String crewName) {
-        userCrewRepository.updateUserCrewStatusToInactive(user, crewName, LocalDate.now());
+        Crew crew = crewRepository.findByName(crewName)
+                        .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
+        UserCrew userCrew = userCrewRepository.findByUserAndCrew(user, crew)
+                .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_USER_CREW));
+        userCrew.inactive();
+        userCrewRepository.save(userCrew);
     }
 
 //    public User findByEmail(String email) {

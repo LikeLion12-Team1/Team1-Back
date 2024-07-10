@@ -40,14 +40,15 @@ public class CrewController {
         return ApiResponse.onSuccess(crewResponseDto);
     }
 
-
     //크루 전체 조회
     @Operation(summary = "크루 전체 조회", description = "모든 크루 조회")
     @GetMapping//HTTP GET 요청을 처리하는 메서드
     //반환 타입은 ApiResponse<List<CrewResponseDto>>
-    public ApiResponse<List<CrewResponseDto>> getAllCrews() {
-        List<CrewResponseDto> crews = crewService.getAllCrews(); // crewService라는 서비스 객체의 getAllCrews() 메서드를 호출하여 모든 Crew 데이터를 가져옴->그 결과를 crews 변수에 저장
-        return ApiResponse.onSuccess(crews); // 성공적인 API 응답을 생성->메서드는 crews 리스트를 API 응답 데이터로 포함
+    public ApiResponse<List<CrewResponseDto>> getAllCrews(
+            @RequestParam(value = "region", required = false) String region,
+            @RequestParam(value = "sports-category", required = false) String category
+    ) {
+        return ApiResponse.onSuccess(crewService.getAllCrewsByOptions(region, category));
     }
 
     //크루 지역별 조회

@@ -16,6 +16,8 @@ import java.time.LocalDate;
 
 public class CrewResponseDto {
 
+    private String photoUrl;
+
     private Long crewId;
 
     private String name;
@@ -30,6 +32,7 @@ public class CrewResponseDto {
     //Crew 객체를 받아서 CrewResponseDto 객체를 생성하고 반환
     public static CrewResponseDto from(Crew crew) {
         return CrewResponseDto.builder()
+                .photoUrl(crew.getCrewImg())
                 .crewId(crew.getCrewId())
                 .name(crew.getName())
                 .region(crew.getRegion())

@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor//DI 생성자 주입을 임의의 코드없이 자동으로 설정해주는 어노테이션
 @Transactional//메서드 실행 시 트랜잭션 처리를 자동으로 수행
 public class CrewService {
+
     private final CrewRepository crewRepository;//크루 관련 데이터 액세스를 위한 리포지토리 인터페이스를 주입
     private final UserCrewRepository userCrewRepository;
     private final UuidRepository uuidRepository;
@@ -50,14 +51,8 @@ public class CrewService {
     }
 
     // 크루 목록 조회
-    public List<CrewResponseDto> getAllCrews() {
-        List<Crew> crews = crewRepository.findAll();//crewRepository를 사용하여 모든 크루 데이터를 가져와 crews 리스트에 저장
-        return crews.stream()
-                .map(CrewResponseDto::from)
-                .collect(Collectors.toList());
-        // crews 리스트에 대해 스트림을 생성
-        //CrewResponseDto::from은 Crew 객체를 CrewResponseDto로 변환하는 정적 메서드
-        //변환된 CrewResponseDto 객체들을 다시 리스트로 수집
+    public List<CrewResponseDto> getAllCrewsByOptions(String region, String category) {
+        return crewRepository.findAllCrew(region, category);
     }
 
     //크루 지역별 조회

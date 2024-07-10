@@ -72,4 +72,8 @@ public class PostService {
 
         postRepository.delete(post);
     }
+
+    public PostResponseDto getPostList(String crewName) {
+        return null;
+    }
 }
