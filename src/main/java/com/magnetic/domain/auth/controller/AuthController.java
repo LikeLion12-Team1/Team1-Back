@@ -4,7 +4,6 @@ import com.magnetic.domain.auth.dto.AuthRequestDto;
 import com.magnetic.domain.auth.dto.AuthResponseDto;
 import com.magnetic.domain.auth.dto.RegisterRequestDto;
 import com.magnetic.domain.auth.service.AuthService;
-import com.magnetic.domain.email.service.EmailService;
 import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import java.io.IOException;
 public class AuthController {
 
     private final AuthService authService;
-    private final EmailService emailService;
 
     @Operation(summary = "회원가입", description = "회원가입")
     @PostMapping("/register")

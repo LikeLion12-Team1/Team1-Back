@@ -36,7 +36,7 @@ public class S3Manager {
         return amazonS3.getUrl(s3Config.getBucket(), keyName).toString();
     }
 
-    public String generateProfileImage(Uuid savedUuid) {
+    public String generateImage(Uuid savedUuid) {
         return s3Config.getPath() + '/' + savedUuid.getUuid();
     }
 }

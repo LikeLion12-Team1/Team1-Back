@@ -5,9 +5,11 @@ import com.magnetic.domain.crew.entity.Post;
 import com.magnetic.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
     //있는지 없는지 검토
     boolean existsByUserAndPost(User user, Post post);

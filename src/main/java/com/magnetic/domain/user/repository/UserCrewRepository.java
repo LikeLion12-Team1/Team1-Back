@@ -4,14 +4,14 @@ import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.entity.UserCrew;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
 
     @Query("SELECT a.crew FROM UserCrew a WHERE a.user = :user")
@@ -19,13 +19,6 @@ public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
 
     @Query("SELECT a.user FROM UserCrew a WHERE a.crew.name = :crewName")
     List<User> findAllUserByCrewName(@Param("crew") String crewName);
-
-    @Modifying
-    @Query("UPDATE UserCrew a " +
-            "SET a.status = 'inactive', a.inactiveDate = :now " +
-            "WHERE a.user = :user AND a.crew.name = :crewName")
-    void updateUserCrewStatusToInactive(
-            @Param("user") User user, @Param("crewName") String crewName, @Param("now") LocalDate now);
 
     @Query("SELECT a.crew " +
             "FROM UserCrew a " +

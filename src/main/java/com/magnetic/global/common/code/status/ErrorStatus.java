@@ -19,6 +19,7 @@ public enum ErrorStatus implements BaseErrorCode {
     // User 에러
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "USER400", "사용자가 존재하지 않습니다."),
     _INVALID_USER(HttpStatus.BAD_REQUEST, "USER401" , "아이디 또는 비밀번호가 틀렸습니다."),
+    _NOT_FOUND_USER_CREW(HttpStatus.BAD_REQUEST, "USER402", "해당 사용자가 크루에 속하고 있지 않습니다."),
 
     // Crew 에러
     _NOT_FOUND_CREW(HttpStatus.NOT_FOUND, "CREW400", "해당 크루가 존재하지 않습니다."),

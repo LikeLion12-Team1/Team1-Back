@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class PostResponseDto {
 
     private Long postId;

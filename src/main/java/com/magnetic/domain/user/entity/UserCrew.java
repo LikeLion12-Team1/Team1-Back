@@ -36,4 +36,8 @@ public class UserCrew extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "crew_id")
     private Crew crew;
+
+    public void inactive() {
+        status = "inactive";
+    }
 }

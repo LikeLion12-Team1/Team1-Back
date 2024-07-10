@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @Operation(summary = "소속 크루 탈퇴", description = "URI에 탈퇴할 크루명 명시")
-    @DeleteMapping("/profile/{crew_name}")
+    @PostMapping("/profile/{crew_name}")
     public ApiResponse<?> quitCrew(@PathVariable("crew_name") String crewName,
                                    @AuthenticationPrincipal User user) {
         userService.inactiveCrew(user, crewName);
