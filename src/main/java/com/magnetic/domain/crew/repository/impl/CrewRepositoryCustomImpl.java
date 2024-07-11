@@ -1,8 +1,13 @@
 package com.magnetic.domain.crew.repository.impl;
 
 import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
+import com.magnetic.domain.crew.dto.postdto.QueryPostResponse;
+import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.entity.QCrew;
+import com.magnetic.domain.crew.entity.QCrewPost;
+import com.magnetic.domain.crew.entity.QPost;
 import com.magnetic.domain.crew.repository.CrewRepositoryCustom;
+import com.magnetic.domain.user.entity.QUser;
 import com.magnetic.domain.user.entity.QUserCrew;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -43,6 +48,29 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
                 .from(crew).leftJoin(userCrew).on(crew.crewId.eq(userCrew.crew.crewId))
                 .where(builder)
                 .orderBy(crew.crewId.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<QueryPostResponse.PostPreviewDto> findAllPost(Crew crew) {
+        QPost post = QPost.post;
+        QUser user = QUser.user;
+        QCrewPost crewPost = QCrewPost.crewPost;
+
+        return queryFactory
+                .select(Projections.constructor(QueryPostResponse.PostPreviewDto.class,
+                        post.postId,
+                        post.photoUrl,
+                        post.createdAt,
+                        user.nickname,
+                        user.profileImg,
+                        post.content,
+                        post.category,
+                        post.likeCount))
+                .from(post)
+                .leftJoin(post.user, user)
+                .leftJoin(crewPost).on(post.eq(crewPost.post))
+                .where(crewPost.crew.eq(crew))
                 .fetch();
     }
 }

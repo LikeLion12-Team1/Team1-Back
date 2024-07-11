@@ -7,14 +7,12 @@ import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
-
-import static com.magnetic.domain.crew.entity.QCrew.crew;
 
 @Slf4j//Lombok 라이브러리를 사용하여 로깅 기능을 제공
 @RestController//REST API 컨트롤러임
@@ -28,11 +26,9 @@ public class CrewController {
     // 크루 생성
     @Operation(summary = "크루 생성", description = "크루 생성하기")
     @PostMapping(consumes = "multipart/form-data")
-    //createCrew 메서드는 CreateCrewRequestDto 타입의 객체를 입력으로 받음
-    // @RequestBody 어노테이션은 HTTP 요청 본문에서 데이터를 읽어와 createCrewRequestDto 객체에 매핑
-    //ApiResponse<CrewResponseDto> 타입의 결과를 반환
-    public ApiResponse<CrewResponseDto> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto,
-                                                   @RequestParam("file")MultipartFile file) {
+    public ApiResponse<CrewResponseDto> createCrew(@ModelAttribute CreateCrewRequestDto createCrewRequestDto,
+                                                   @RequestParam("file") MultipartFile file
+    ) throws IOException {
         CrewResponseDto crewResponseDto = crewService.createCrew(createCrewRequestDto, file);
         return ApiResponse.onSuccess(crewResponseDto);
     }
@@ -68,7 +64,7 @@ public class CrewController {
     //특정 크루 정보 조회
     @Operation(summary = "특정 크루 조회", description = "크루 아이디로 특정 크루 상세정보 조회")
     @GetMapping("/{crew_id}")
-    public ApiResponse<CrewCustomResponse.Preview> getCrew(@PathVariable("crew_id") Long crewId){
+    public ApiResponse<CrewCustomResponse.Preview> getCrew(@PathVariable("crew_id") Long crewId) {
         return ApiResponse.onSuccess(crewService.getCrew(crewId));
     }
 
@@ -109,7 +105,7 @@ public class CrewController {
     //크루 가입
     @Operation(summary = "크루 가입", description = "크루 가입하기")
     @PostMapping("/join/{crew_id}")
-    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user){
+    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user) {
         JoinCrewDto joinCrewDto = crewService.joinCrew(crewId, user);
         return ApiResponse.onSuccess(joinCrewDto);
     }

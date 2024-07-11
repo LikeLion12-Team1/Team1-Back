@@ -1,12 +1,16 @@
 package com.magnetic.domain.crew.service;
 
 import com.magnetic.domain.crew.dto.postdto.CreatePostRequestDto;
+import com.magnetic.domain.crew.dto.postdto.QueryPostResponse;
 import com.magnetic.domain.crew.dto.postdto.UpdatePostRequestDto;
 import com.magnetic.domain.crew.dto.postdto.PostResponseDto;
+import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.entity.Post;
-import com.magnetic.domain.crew.repository.CrewPostRepository;
+import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.crew.repository.PostRepository;
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.global.common.code.status.ErrorStatus;
+import com.magnetic.global.common.exception.handler.CrewHandler;
 import com.magnetic.s3.S3Manager;
 import com.magnetic.s3.entity.Uuid;
 import com.magnetic.s3.repository.UuidRepository;
@@ -28,7 +32,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CrewPostRepository crewPostRepository;
+    private final CrewRepository crewRepository;
     private final UuidRepository uuidRepository;
     private final S3Manager s3Manager;
 
@@ -86,20 +90,26 @@ public class PostService {
         postRepository.delete(post);
     }
 
+    public QueryPostResponse.PostPreviewListDto getPostList(String crewName) {
+        Crew crew = crewRepository.findByName(crewName)
+                .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
+        List<QueryPostResponse.PostPreviewDto> postPreviewDtoList = crewRepository.findAllPost(crew);
+
+        return QueryPostResponse.PostPreviewListDto.builder()
+                .postPreviewList(postPreviewDtoList)
+                .build();
+    }
+
     //게시글 신고
-    public boolean reportPost (Long postId){
+    public boolean reportPost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));;
-        if(post != null){
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        if (post != null) {
             post.reportPost();
             postRepository.save(post);
             return true;
         }
         return false;
-
-    }
-
-    public PostResponseDto getPostList(String crewName) {
-        return null;
     }
 }
+

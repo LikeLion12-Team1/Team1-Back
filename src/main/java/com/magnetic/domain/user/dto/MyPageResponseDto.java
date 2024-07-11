@@ -19,7 +19,6 @@ public class MyPageResponseDto {
         private List<MyCrewPreview> myCrewPreviewList;
         private List<MyChallengePreview> myChallengePreviewList;
         private Long userCount;
-        private Long requiredCount;
     }
 
     @Builder

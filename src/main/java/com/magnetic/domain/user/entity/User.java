@@ -68,10 +68,6 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Like> likes = new ArrayList<>();
 
-    //신고
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Report> reportList;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

@@ -46,6 +46,7 @@ public class MyPageService {
         return MyPageResponseDto.MyPagePreview.builder()
                 .myCrewPreviewList(myCrewPreviewList)
                 .myChallengePreviewList(myChallengePreviewList)
+                .userCount(user.getPlantToken())
                 .build();
     }
 

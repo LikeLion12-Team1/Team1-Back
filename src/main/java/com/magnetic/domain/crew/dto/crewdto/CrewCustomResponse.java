@@ -13,7 +13,7 @@ public record CrewCustomResponse() {
             String crewImg,
             String crewName,
             Long memberCount,
-            CrewChallengePreviewList crewChallengePreviewList,
+            List<CrewChallengePreview> crewChallengePreviewList,
             LocalDate crewStartAt
     ) {
     }
