@@ -41,13 +41,14 @@ public class MyPageResponseDto {
         private String challengeName;
         private LocalDate startAt;
         private LocalDate untilWhen;
-        private String status;
+        private Long requiredVerificationCount;
+        private Long verifiedCount;
     }
 
     @Builder
     public record AdminMyPagePreview(
-            AdminMemberPreviewList adminMemberPreviewList,
-            AdminCommunityPreviewList adminCommunityPreviewList
+            List<AdminMemberPreview> adminMemberPreviewList,
+            List<AdminCommunityPreview> adminCommunityPreviewList
     ) {
     }
 

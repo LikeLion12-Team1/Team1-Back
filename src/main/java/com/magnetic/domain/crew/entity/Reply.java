@@ -1,6 +1,7 @@
 package com.magnetic.domain.crew.entity;
 
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reply {
+public class Reply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

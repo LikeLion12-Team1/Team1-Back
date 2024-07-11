@@ -51,11 +51,13 @@ public class MyPageService {
     }
 
     public MyPageResponseDto.AdminMyPagePreview getAdminMyPage(String crewName) {
-        MyPageResponseDto.AdminCommunityPreviewList adminCommunityPreviewList =
-                UserConverter.toAdminCommunityPreviewList(crewPostRepository.findAllPostByCrewName(crewName));
+        List<Post> postList = crewPostRepository.findAllPostByCrewName(crewName);
+        List<MyPageResponseDto.AdminCommunityPreview> adminCommunityPreviewList = postList.stream()
+                .map(UserConverter::toAdminCommunityPreview).toList();
 
-        MyPageResponseDto.AdminMemberPreviewList adminMemberPreviewList =
-                UserConverter.toAdminMemberPreviewList(userCrewRepository.findAllUserByCrewName(crewName));
+        List<User> userList = userCrewRepository.findAllUserByCrewName(crewName);
+        List<MyPageResponseDto.AdminMemberPreview> adminMemberPreviewList = userList.stream()
+                .map(UserConverter::toAdminMemberPreview).toList();
 
         return MyPageResponseDto.AdminMyPagePreview.builder()
                 .adminCommunityPreviewList(adminCommunityPreviewList)

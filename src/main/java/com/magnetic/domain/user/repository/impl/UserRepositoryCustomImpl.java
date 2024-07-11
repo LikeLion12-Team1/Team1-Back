@@ -31,7 +31,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         challenge.name,
                         challenge.startAt,
                         challenge.untilWhen,
-                        userChallenge.status))
+                        challenge.requiredVerification,
+                        userChallenge.verificationCount))
                 .from(challenge).leftJoin(userChallenge).on(challenge.challengeId.eq(userChallenge.challenge.challengeId))
                 .orderBy(challenge.startAt.desc())
                 .fetch();
@@ -48,7 +49,9 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         crew.name,
                         userCrew.createdAt,
                         userCrew.inactiveDate))
-                .from(crew).leftJoin(userCrew).on(crew.crewId.eq(userCrew.crew.crewId))
+                .from(userCrew)
+                .leftJoin(userCrew.crew, crew)
+                .where(userCrew.user.eq(user))
                 .orderBy(userCrew.createdAt.desc())
                 .fetch();
     }

@@ -18,7 +18,7 @@ public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
     List<Crew> findAllCrewByUser(@Param("user") User user);
 
     @Query("SELECT a.user FROM UserCrew a WHERE a.crew.name = :crewName")
-    List<User> findAllUserByCrewName(@Param("crew") String crewName);
+    List<User> findAllUserByCrewName(@Param("crewName") String crewName);
 
     @Query("SELECT a.crew " +
             "FROM UserCrew a " +

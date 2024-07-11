@@ -9,15 +9,14 @@ public record PlantResponse() {
     @Builder
     public record PlantPreviewListDto(
             Long holdingTokens,
-            List<PlantPreviewDto> plantPreviewDtoList
+            List<PlantPreviewDto> plantPreviewDtoList,
+            Long userCount
     ) {
     }
 
     @Builder
     public record PlantPreviewDto(
-            String type,
-            String name,
-            Byte isLocked
+            Long plantId
     ) {
     }
 }
