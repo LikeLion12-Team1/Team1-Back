@@ -24,4 +24,11 @@ public record QueryPostResponse() {
             String category,
             Long likeCount
     ) {}
+
+    @Builder
+    public record CreatedPostResponse(
+            String nickname,
+            String postImg,
+            LocalDateTime postCreatedAt
+    ) {}
 }

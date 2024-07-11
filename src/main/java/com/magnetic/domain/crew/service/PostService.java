@@ -55,8 +55,10 @@ public class PostService {
     }
 
     // 게시글 사진 업로드
-    public void uploadPostImage(Long postId, MultipartFile file, User user) {
+    public QueryPostResponse.CreatedPostResponse uploadPostImage(Long postId, MultipartFile file, User user) {
         String url = null;
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
 
         if (file != null && !file.isEmpty()) {
             String uuid = UUID.randomUUID().toString();
@@ -65,11 +67,13 @@ public class PostService {
 
             url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
 
-            Post post = postRepository.findById(postId)
-                    .orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
-
             post.uploadImage(url);
         }
+        return QueryPostResponse.CreatedPostResponse.builder()
+                .nickname(user.getNickname())
+                .postImg(url)
+                .postCreatedAt(post.getCreatedAt())
+                .build();
     }
 
     // 게시글 상세 조회
