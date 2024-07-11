@@ -1,14 +1,17 @@
 package com.magnetic.domain.crew.service;
 
-import com.magnetic.domain.crew.dto.crewdto.CreateCrewRequestDto;
-import com.magnetic.domain.crew.dto.crewdto.JoinCrewDto;
-import com.magnetic.domain.crew.dto.crewdto.UpdateCrewRequestDto;
-import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
+import com.magnetic.domain.challenge.converter.ChallengeConverter;
+import com.magnetic.domain.challenge.entity.Challenge;
+import com.magnetic.domain.crew.converter.CrewConverter;
+import com.magnetic.domain.crew.dto.crewdto.*;
 import com.magnetic.domain.crew.entity.Crew;
+import com.magnetic.domain.crew.repository.CrewChallengeRepository;
 import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.domain.user.repository.UserCrewRepository;
+import com.magnetic.global.common.code.status.ErrorStatus;
+import com.magnetic.global.common.exception.handler.CrewHandler;
 import com.magnetic.s3.S3Manager;
 import com.magnetic.s3.entity.Uuid;
 import com.magnetic.s3.repository.UuidRepository;
@@ -32,6 +35,7 @@ public class CrewService {
 
     private final CrewRepository crewRepository;//크루 관련 데이터 액세스를 위한 리포지토리 인터페이스를 주입
     private final UserCrewRepository userCrewRepository;
+    private final CrewChallengeRepository crewChallengeRepository;
     private final UuidRepository uuidRepository;
     private final S3Manager s3Manager;
 
@@ -69,15 +73,6 @@ public class CrewService {
         return crews.stream()
                 .map(CrewResponseDto::from)
                 .collect(Collectors.toList());
-    }
-
-    //특정 크루 조회
-    //crewId를 입력받아 해당 크루 정보를 반환
-    public CrewResponseDto getCrew(Long crewId){
-        Crew crew = crewRepository.findById(crewId)//crewRepository를 사용하여 crewId에 해당하는 Crew 객체 찾음
-                .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));//crewId에 해당하는 Crew 객체가 없다면, IllegalArgumentException을 던짐
-
-        return CrewResponseDto.from(crew);//찾은 Crew 객체를 CrewResponseDto.from() 메서드를 사용하여 CrewResponseDto 객체로 변환하고 반환
     }
 
     // 크루 수정
@@ -133,11 +128,24 @@ public class CrewService {
                 .crewCount(crew.getCrewCount())
                 .joinedAt(userCrew.getJoinedAt())
                 .build();
-
-
     }
 
+    // 특정 크루 조회
+    public CrewCustomResponse.Preview getCrew(Long crewId) {
+        Crew crew = crewRepository.findById(crewId)
+                .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
+        Long memberCount = userCrewRepository.countAllByCrew(crew);
+        List<Challenge> challengeList = crewChallengeRepository.findAllChallengeByCrew(crew);
+        CrewCustomResponse.CrewChallengePreviewList challengePreviewList = CrewConverter.toChallengePreviewList(challengeList);
 
+        return CrewCustomResponse.Preview.builder()
+                .crewImg(crew.getCrewImg())
+                .crewName(crew.getName())
+                .memberCount(memberCount)
+                .crewChallengePreviewList(challengePreviewList)
+                .crewStartAt(crew.getCreatedAt())
+                .build();
+    }
 }
 
     

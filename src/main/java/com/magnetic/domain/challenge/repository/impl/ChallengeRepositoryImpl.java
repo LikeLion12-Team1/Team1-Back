@@ -35,6 +35,7 @@ public class ChallengeRepositoryImpl implements ChallengeRepositoryCustom {
         return queryFactory
                 .select(Projections.constructor(ChallengeResponseDto.ChallengePreviewDto.class,
                         challenge.challengeId,
+                        challenge.name,
                         challenge.startAt,
                         challenge.untilWhen,
                         challenge.notice,
