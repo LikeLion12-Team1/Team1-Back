@@ -92,7 +92,7 @@ public class CrewService {
         Crew crew = crewRepository.findById(crewId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));
 
-        crewRepository.delete(crew);//crewRepository를 사용하여 찾은 크루 엔티티를 삭제
+        crewRepository.delete(crew); //crewRepository를 사용하여 찾은 크루 엔티티를 삭제
     }
 
     public boolean crewNameDuplicate(String crewName) {
