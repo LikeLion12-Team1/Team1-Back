@@ -15,13 +15,4 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     boolean existsByEmail(String email);
     boolean existsByNickname(String nickname);
     //Optional<User> findByNickname(String nickname);
-
-    @Query("SELECT u.nickname, mp.plantId"
-            + "FROM User u "
-            + "JOIN UserCrew uc ON u.userId = uc.user.userId "
-            + "JOIN Crew c ON uc.crew.crewId = c.crewId "
-            + "JOIN UserPlant up ON u.userId = up.user.userId "
-            + "JOIN Plant mp ON up.plant.plantId = mp.plantId "
-            + "WHERE up.isMain = 1 AND c.crewId = :crewId")
-    List<CrewPlantResponseDto> findCrewUserMainPlants(@Param("crewId") Long crewId);
 }

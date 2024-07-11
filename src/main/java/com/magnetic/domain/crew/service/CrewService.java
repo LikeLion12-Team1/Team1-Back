@@ -148,14 +148,11 @@ public class CrewService {
     }
 
     //크루 플랜트 조회
-    public List<CrewPlantResponseDto> getCrewPlants(Long crewId, User user){
-        //해당 크루가 존재하는지 확인
+    public List<CrewPlantResponseDto> getCrewPlants(Long crewId){
+        // 특정 크루에 속한 멤버들의 닉네임과 메인 플랜트 아이디 조회
         Crew crew = crewRepository.findById(crewId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));
-
-
-
-
+                .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
+        return crewRepository.findNicknameAndMainPlant(crew);
     }
 }
 

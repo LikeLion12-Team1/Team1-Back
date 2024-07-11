@@ -1,8 +1,10 @@
 package com.magnetic.domain.crew.dto.crewdto;
 
-public class CrewPlantResponseDto {
+import lombok.Builder;
 
-    private String nickname;
-
-    private Long plantId;
+@Builder
+public record CrewPlantResponseDto(
+        String crewMemberName,
+        Long crewMemberMainPlantId
+) {
 }

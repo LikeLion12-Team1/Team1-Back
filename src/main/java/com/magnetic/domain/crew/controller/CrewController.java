@@ -112,11 +112,11 @@ public class CrewController {
     }
 
     //크루 플랜트 조회
-    @Operation(summary = "크루원 식물 목록 조회", description = "크루원의 메인 식물 목록 조회하기")
-    @GetMapping("/{crew_id}/plant")
-    public ApiResponse<List<CrewPlantResponseDto>> getCrewPlant(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user){
-        List<CrewPlantResponseDto> crewResponseDtoList = crewService.getCrewPlants(crewId, user);
-        return ApiResponse.onSuccess(crewResponseDtoList);
+    @Operation(summary = "크루원 식물 목록 조회 (크루 플랜트)", description = "크루원의 메인 식물 목록 조회하기")
+    @GetMapping("/{crew_id}/crew-plant")
+    public ApiResponse<List<CrewPlantResponseDto>> getCrewPlant(
+            @PathVariable("crew_id") Long crewId){
+        return ApiResponse.onSuccess(crewService.getCrewPlants(crewId));
 
     }
 
