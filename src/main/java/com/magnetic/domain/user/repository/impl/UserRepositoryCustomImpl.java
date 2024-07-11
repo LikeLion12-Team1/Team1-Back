@@ -31,7 +31,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         challenge.name,
                         challenge.startAt,
                         challenge.untilWhen,
-                        userChallenge.status))
+                        challenge.requiredVerification,
+                        userChallenge.verificationCount))
                 .from(challenge).leftJoin(userChallenge).on(challenge.challengeId.eq(userChallenge.challenge.challengeId))
                 .orderBy(challenge.startAt.desc())
                 .fetch();
