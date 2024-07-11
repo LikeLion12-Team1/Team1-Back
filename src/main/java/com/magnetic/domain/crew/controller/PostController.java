@@ -20,14 +20,14 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/crews/posts")
+@RequestMapping("/api/v1/crews/{crew_name}/posts")
 @CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
 
     @Operation(summary = "게시글 목록 조회", description = "크루 게시글 전체 목록 조회")
-    @GetMapping("/{crew_name}")
+    @GetMapping("")
     public ApiResponse<QueryPostResponse.PostPreviewListDto> getPostList(
             @PathVariable("crew_name") String crewName
     ) {
@@ -38,17 +38,18 @@ public class PostController {
     @Operation(summary = "게시글 생성: 내용, 카테고리 작성", description = "게시글 작성하기")
     @PostMapping("")
     public ApiResponse<Long> createPost(@RequestBody CreatePostRequestDto createPostRequestDto,
-                                                   @AuthenticationPrincipal User user
+                                        @PathVariable("crew_name") String crewName,
+                                        @AuthenticationPrincipal User user
     ) throws IOException {
-        return ApiResponse.created(postService.createPost(createPostRequestDto, user));
+        return ApiResponse.created(postService.createPost(createPostRequestDto, user, crewName));
     }
 
     //게시글 작성 사진 업로드
     @Operation(summary = "게시글 생성: 사진 업로드", description = "이미지 파일 업로드, 첨부 안해도 ok")
-    @PostMapping(value = "/{post_id}",consumes = "multipart/form-data")
+    @PostMapping(value = "/{post_id}", consumes = "multipart/form-data")
     public ApiResponse<QueryPostResponse.CreatedPostResponse> uploadPostImage(@RequestParam(value = "file", required = false) MultipartFile file,
-                                                                          @PathVariable("post_id") Long postId,
-                                                                          @AuthenticationPrincipal User user) {
+                                                                              @PathVariable("post_id") Long postId,
+                                                                              @AuthenticationPrincipal User user) {
         return ApiResponse.created(postService.uploadPostImage(postId, file, user));
     }
 
@@ -73,15 +74,16 @@ public class PostController {
     //게시글 삭제
     @Operation(summary = "게시글 삭제", description = "게시글 삭제하기")
     @DeleteMapping("/{postId}")
-    public ApiResponse<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    public ApiResponse<Void> deletePost(@PathVariable Long postId,
+                                        @PathVariable("crew_name") String crewName) {
+        postService.deletePost(postId, crewName);
         return ApiResponse.noContent();
     }
 
     //게시글 신고
     @Operation(summary = "게시글 신고", description = "게시글 신고하기")
     @PostMapping("/{postId}/report")
-    public ApiResponse<Boolean> reportPost(@PathVariable Long postId){
+    public ApiResponse<Boolean> reportPost(@PathVariable Long postId) {
         boolean isReported = postService.reportPost(postId);
         return ApiResponse.onSuccess(isReported);
     }

@@ -7,8 +7,10 @@ import com.magnetic.domain.crew.dto.postdto.UpdatePostRequestDto;
 import com.magnetic.domain.crew.dto.postdto.PostResponseDto;
 import com.magnetic.domain.crew.dto.replydto.ReplyResponseDto;
 import com.magnetic.domain.crew.entity.Crew;
+import com.magnetic.domain.crew.entity.CrewPost;
 import com.magnetic.domain.crew.entity.Post;
 import com.magnetic.domain.crew.entity.Reply;
+import com.magnetic.domain.crew.repository.CrewPostRepository;
 import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.crew.repository.PostRepository;
 import com.magnetic.domain.crew.repository.ReplyRepository;
@@ -36,19 +38,25 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CrewRepository crewRepository;
+    private final CrewPostRepository crewPostRepository;
     private final ReplyRepository replyRepository;
     private final UuidRepository uuidRepository;
     private final S3Manager s3Manager;
 
     //게시글 생성
-    public Long createPost(CreatePostRequestDto createPostRequestDto, User user) {
+    public Long createPost(CreatePostRequestDto createPostRequestDto, User user, String crewName) {
         Post post = Post.builder()
                 .user(user)
                 .content(createPostRequestDto.getContent())
                 .category(createPostRequestDto.getCategory())
                 .build();
         Post savedPost = postRepository.save(post);
-
+        Crew crew = crewRepository.findByName(crewName)
+                        .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
+        crewPostRepository.save(CrewPost.builder()
+                .post(post)
+                .crew(crew)
+                .build());
         return savedPost.getPostId();
     }
 
@@ -104,10 +112,10 @@ public class PostService {
     }
 
     //게시글 삭제
-    public void deletePost(Long postId) {
+    public void deletePost(Long postId, String crewName) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-
+        crewPostRepository.deleteByCrewName(crewName);
         postRepository.delete(post);
     }
 
