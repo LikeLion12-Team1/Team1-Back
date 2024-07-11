@@ -25,12 +25,11 @@ public class PlantRepositoryCustomImpl implements PlantRepositoryCustom {
 
         return queryFactory
                 .select(Projections.constructor(PlantResponse.PlantPreviewDto.class,
-                        plant.type,
-                        plant.name,
-                        userPlant.isLocked))
+                        plant.plantId))
                 .from(plant)
                 .leftJoin(userPlant).on(plant.plantId.eq(userPlant.plant.plantId))
                 .where(userPlant.isLocked.eq((byte) 1))
+                .orderBy(plant.plantId.asc())
                 .fetch();
     }
 }

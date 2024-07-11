@@ -45,7 +45,7 @@ public class PlantController {
             @PathVariable(name = "plant_id") Long plantId,
             @AuthenticationPrincipal User user
     ) {
-        return ApiResponse.onSuccess(plantService.unlockPlant(plantId, user));
+         return ApiResponse.onSuccess(plantService.unlockPlant(plantId, user));
     }
 
 }

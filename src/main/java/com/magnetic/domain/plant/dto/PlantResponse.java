@@ -16,9 +16,7 @@ public record PlantResponse() {
 
     @Builder
     public record PlantPreviewDto(
-            String type,
-            String name,
-            Byte isLocked
+            Long plantId
     ) {
     }
 }
