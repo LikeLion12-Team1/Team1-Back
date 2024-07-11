@@ -32,4 +32,16 @@ public record ChallengeResponseDto() {
             Long crewId,
             String crewName
     ) {}
+
+    @Builder
+    public record ChallengingCrewPreviewList(
+            List<ChallengingCrewPreviewDto> challengingCrewPreviewDtoList
+    ) {}
+
+    @Builder
+    public record ChallengingCrewPreviewDto(
+            Long crewId,
+            String crewImgUrl,
+            String crewName
+    ) {}
 }

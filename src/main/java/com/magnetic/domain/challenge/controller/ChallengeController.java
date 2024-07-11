@@ -36,4 +36,12 @@ public class ChallengeController {
             ) {
         return ApiResponse.onSuccess(challengeService.getCrewNameList(challengeId, user));
     }
+
+    @Operation(summary = "특정 챌린지 참여중인 크루 목록 조회", description = "해당 챌린지 참여중인 크루 목록 조회")
+    @GetMapping("/detail/{challenge_id}")
+    public ApiResponse<ChallengeResponseDto.ChallengingCrewPreviewList> getCrewList(
+            @PathVariable(name = "challenge_id") Long challengeId
+    ) {
+        return ApiResponse.onSuccess(challengeService.getCrewListOnChallenging(challengeId));
+    }
 }

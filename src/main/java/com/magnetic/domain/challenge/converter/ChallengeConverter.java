@@ -41,6 +41,14 @@ public class ChallengeConverter {
                 .build();
     }
 
+    public static ChallengeResponseDto.ChallengingCrewPreviewDto toChallengingCrewPreviewDto(Crew crew) {
+        return ChallengeResponseDto.ChallengingCrewPreviewDto.builder()
+                .crewId(crew.getCrewId())
+                .crewImgUrl(crew.getCrewImg())
+                .crewName(crew.getName())
+                .build();
+    }
+
 //    public static UserResponseDto.CrewPreview toCrewPreview(Crew crew) {
 //        return UserResponseDto.CrewPreview.builder()
 //                .crewName(crew.getName())

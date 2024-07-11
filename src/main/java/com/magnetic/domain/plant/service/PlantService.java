@@ -30,6 +30,7 @@ public class PlantService {
         return PlantResponse.PlantPreviewListDto.builder()
                 .holdingTokens(user.getPlantToken())
                 .plantPreviewDtoList(allPlantByUser)
+                .userCount(user.getPlantToken())
                 .build();
     }
 
