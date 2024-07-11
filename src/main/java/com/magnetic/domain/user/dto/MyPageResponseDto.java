@@ -47,8 +47,8 @@ public class MyPageResponseDto {
 
     @Builder
     public record AdminMyPagePreview(
-            AdminMemberPreviewList adminMemberPreviewList,
-            AdminCommunityPreviewList adminCommunityPreviewList
+            List<AdminMemberPreview> adminMemberPreviewList,
+            List<AdminCommunityPreview> adminCommunityPreviewList
     ) {
     }
 
