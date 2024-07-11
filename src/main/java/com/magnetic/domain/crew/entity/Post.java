@@ -63,6 +63,9 @@ public class Post extends BaseEntity {
         photoUrl = updatePostRequestDto.getPhotoUrl();
     }
 
+    public void uploadImage(String url) {
+        photoUrl = url;
+    }
 
     public void verify() {
         if (isVerified == 0) {

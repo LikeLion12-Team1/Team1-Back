@@ -34,15 +34,23 @@ public class PostController {
         return ApiResponse.onSuccess(postService.getPostList(crewName));
     }
 
-    //게시글 생성
-    @Operation(summary = "게시글 생성", description = "게시글 생성하기")
-    @PostMapping(consumes = "multipart/form-data")
-    public ApiResponse<PostResponseDto> createPost(@ModelAttribute CreatePostRequestDto createPostRequestDto,
-                                                   @RequestParam("file") MultipartFile file,
+    //게시글 작성
+    @Operation(summary = "게시글 생성: 내용, 카테고리 작성", description = "게시글 작성하기")
+    @PostMapping("")
+    public ApiResponse<Long> createPost(@RequestBody CreatePostRequestDto createPostRequestDto,
                                                    @AuthenticationPrincipal User user
     ) throws IOException {
-        PostResponseDto postResponseDto = postService.createPost(createPostRequestDto, file, user);
-        return ApiResponse.created(postResponseDto);
+        return ApiResponse.created(postService.createPost(createPostRequestDto, user));
+    }
+
+    //게시글 작성 사진 업로드
+    @Operation(summary = "게시글 생성: 사진 업로드", description = "이미지 파일 업로드, 첨부 안해도 ok")
+    @PostMapping(value = "/{post_id}",consumes = "multipart/form-data")
+    public ApiResponse<?> uploadPostImage(@RequestParam(value = "file", required = false) MultipartFile file,
+                                                                          @PathVariable("post_id") Long postId,
+                                                                          @AuthenticationPrincipal User user) {
+        postService.uploadPostImage(postId, file, user);
+        return ApiResponse.created("게시글 등록 완료");
     }
 
     //게시글 상세 조회

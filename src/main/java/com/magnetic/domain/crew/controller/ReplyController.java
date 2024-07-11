@@ -31,15 +31,4 @@ public class ReplyController {
         //결과응답
         return ApiResponse.created(replyResponseDto);
     }
-
-
-    @Operation(summary = "게시글 댓글 목록 조회", description = "게시글 댓글 목록 조회하기")
-    @GetMapping("posts/{postId}/reply")
-    public ApiResponse<List<ReplyResponseDto>> getReplies(@PathVariable Long postId, @AuthenticationPrincipal User user){
-        //서비스에 위임
-        List<ReplyResponseDto> replyResponseDtos = replyService.getReplies(postId, user);
-
-        return ApiResponse.onSuccess(replyResponseDtos);
-    }
-
 }

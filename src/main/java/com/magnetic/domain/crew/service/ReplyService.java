@@ -7,14 +7,12 @@ import com.magnetic.domain.crew.entity.Reply;
 import com.magnetic.domain.crew.repository.PostRepository;
 import com.magnetic.domain.crew.repository.ReplyRepository;
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.global.common.code.status.ErrorStatus;
+import com.magnetic.global.common.exception.handler.PostHandler;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Service
 @Slf4j
@@ -25,34 +23,20 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
 
-    public ReplyResponseDto createReply(Long postId, ReplyRequestDto replyRequestDto, User user){
+    public ReplyResponseDto createReply(Long postId, ReplyRequestDto replyRequestDto, User user) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
 
-        Reply reply = new Reply();
-        reply.setContent(replyRequestDto.getContent());
-        reply.setPost(post);
-
+        Reply reply = Reply.builder()
+                .content(replyRequestDto.getContent())
+                .user(user)
+                .post(post)
+                .build();
         Reply savedReply = replyRepository.save(reply);
 
-        return ReplyResponseDto.from(post, user, savedReply);
+        return ReplyResponseDto.builder()
+                .content(savedReply.getContent())
+                .createdAt(savedReply.getCreatedAt())
+                .build();
     }
-
-
-    public List<ReplyResponseDto> getReplies(Long postId, User user){
-        //댓글 조회
-        List<Reply> replies = replyRepository.findAllByPostId(postId);
-        //엔티티->Dto
-        List<ReplyResponseDto> replyResponseDtos = new ArrayList<ReplyResponseDto>();
-        for (Reply reply : replies){
-            ReplyResponseDto replyResponseDto = new ReplyResponseDto();
-            replyResponseDto.setPostId(postId);
-            replyResponseDto.setNickname(user.getNickname());
-            replyResponseDto.setContent(reply.getContent());
-            replyResponseDtos.add(replyResponseDto);
-                    }
-        //결과 반환
-        return replyResponseDtos;
-    }
-
 }
