@@ -14,5 +14,5 @@ public interface CrewRepositoryCustom {
 
     List<QueryPostResponse.PostPreviewDto> findAllPost(Crew crew);
 
-    List<CrewPlantResponseDto> findNicknameAndMainPlant(Crew crew);
+    List<CrewPlantResponseDto> findAllUserAndMainPlantIdByCrew(Crew crew);
 }

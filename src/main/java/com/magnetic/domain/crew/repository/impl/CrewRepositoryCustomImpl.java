@@ -40,7 +40,7 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
         }
 
         return queryFactory
-                .select(Projections.constructor(CrewResponseDto.class,
+                .selectDistinct(Projections.constructor(CrewResponseDto.class,
                         crew.crewImg,
                         crew.crewId,
                         crew.name,
@@ -77,19 +77,20 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
     }
 
     @Override
-    public List<CrewPlantResponseDto> findNicknameAndMainPlant(Crew crew) {
+    public List<CrewPlantResponseDto> findAllUserAndMainPlantIdByCrew(Crew crew) {
         QUser user = QUser.user;
         QUserCrew userCrew = QUserCrew.userCrew;
         QUserPlant userPlant = QUserPlant.userPlant;
 
         return queryFactory
-                .selectDistinct(Projections.constructor(CrewPlantResponseDto.class,
+                .select(Projections.constructor(CrewPlantResponseDto.class,
                         user.nickname,
                         userPlant.plant.plantId))
                 .from(user)
-                .leftJoin(userCrew).on(userCrew.user.eq(user), userCrew.crew.eq(crew))
-                .leftJoin(userPlant).on(userPlant.user.eq(user))
-                .where(userPlant.isMain.eq((byte) 1))
+                .join(userCrew).on(user.userId.eq(userCrew.user.userId))
+                .join(userPlant).on(user.userId.eq(userPlant.user.userId))
+                .where(userCrew.crew.eq(crew)
+                        .and(userPlant.isMain.eq((byte) 1)))
                 .fetch();
     }
 }
