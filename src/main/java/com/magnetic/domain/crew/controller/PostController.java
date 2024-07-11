@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,9 +26,11 @@ public class PostController {
 
     //게시글 생성
     @Operation(summary = "게시글 생성", description = "게시글 생성하기")
-    @PostMapping
-    public ApiResponse<PostResponseDto> createPost(@RequestBody CreatePostRequestDto createPostRequestDto, @AuthenticationPrincipal User user) {
-        PostResponseDto postResponseDto = postService.createPost(createPostRequestDto, user);
+    @PostMapping(consumes = "multipart/form-data")
+    public ApiResponse<PostResponseDto> createPost(@RequestBody CreatePostRequestDto createPostRequestDto,
+                                                   @RequestParam("file") MultipartFile file,
+                                                   @AuthenticationPrincipal User user) {
+        PostResponseDto postResponseDto = postService.createPost(createPostRequestDto, file, user);
         return ApiResponse.created(postResponseDto);
     }
 

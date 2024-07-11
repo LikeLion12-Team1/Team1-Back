@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지를 수정")
-    @PostMapping(value = "/profile-image")
+    @PostMapping(value = "/profile-image", consumes = "multipart/form-data")
     public ApiResponse<String> updateProfileImg(
             @RequestParam("file") MultipartFile multipartFile,
             @AuthenticationPrincipal User user
