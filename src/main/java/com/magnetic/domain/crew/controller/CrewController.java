@@ -25,9 +25,6 @@ public class CrewController {
     // 크루 생성
     @Operation(summary = "크루 생성", description = "크루 생성하기")
     @PostMapping(consumes = "multipart/form-data")
-    //createCrew 메서드는 CreateCrewRequestDto 타입의 객체를 입력으로 받음
-    // @RequestBody 어노테이션은 HTTP 요청 본문에서 데이터를 읽어와 createCrewRequestDto 객체에 매핑
-    //ApiResponse<CrewResponseDto> 타입의 결과를 반환
     public ApiResponse<CrewResponseDto> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto,
                                                    @RequestParam("file")MultipartFile file) {
         CrewResponseDto crewResponseDto = crewService.createCrew(createCrewRequestDto, file);

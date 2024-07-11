@@ -135,13 +135,14 @@ public class CrewService {
                 .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
         Long memberCount = userCrewRepository.countAllByCrew(crew);
         List<Challenge> challengeList = crewChallengeRepository.findAllChallengeByCrew(crew);
-        CrewCustomResponse.CrewChallengePreviewList challengePreviewList = CrewConverter.toChallengePreviewList(challengeList);
+        List<CrewCustomResponse.CrewChallengePreview> crewChallengePreviewList = challengeList.stream()
+                .map(CrewConverter::toChallengePreview).toList();
 
         return CrewCustomResponse.Preview.builder()
                 .crewImg(crew.getCrewImg())
                 .crewName(crew.getName())
                 .memberCount(memberCount)
-                .crewChallengePreviewList(challengePreviewList)
+                .crewChallengePreviewList(crewChallengePreviewList)
                 .crewStartAt(crew.getCreatedAt())
                 .build();
     }
