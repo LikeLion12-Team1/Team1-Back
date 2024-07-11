@@ -16,6 +16,8 @@ public class PostConverter {
 
     public static ReplyResponseDto toReplyResponseDto(Reply reply) {
         return ReplyResponseDto.builder()
+                .replyAuthorNickname(reply.getUser().getNickname())
+                .replyAuthorProfileImg(reply.getUser().getProfileImg())
                 .content(reply.getContent())
                 .createdAt(reply.getCreatedAt())
                 .build();
