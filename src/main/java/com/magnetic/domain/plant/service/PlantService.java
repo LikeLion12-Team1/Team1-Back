@@ -58,8 +58,12 @@ public class PlantService {
 
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
-        UserPlant userPlant = userPlantRepository.findUserPlantByUserAndPlant(user, plant);
-        userPlant.unlock();
+        UserPlant userPlant = UserPlant.builder()
+                .user(user)
+                .plant(plant)
+                .isLocked((byte) 1)
+                .build();
+
         userPlantRepository.save(userPlant);
 
         return "해금되었습니다.";

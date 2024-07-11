@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,7 +68,6 @@ public class UserService {
     }
 
     public void updateProfileImg(MultipartFile file, User user) {
-
         String uuid = UUID.randomUUID().toString();
         Uuid savedUuid = uuidRepository.save(Uuid.builder()
                 .uuid(uuid).build());
