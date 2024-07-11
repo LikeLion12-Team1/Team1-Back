@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j//Lombok 라이브러리를 사용하여 로깅 기능을 제공
@@ -25,8 +26,9 @@ public class CrewController {
     // 크루 생성
     @Operation(summary = "크루 생성", description = "크루 생성하기")
     @PostMapping(consumes = "multipart/form-data")
-    public ApiResponse<CrewResponseDto> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto,
-                                                   @RequestParam("file")MultipartFile file) {
+    public ApiResponse<CrewResponseDto> createCrew(@ModelAttribute CreateCrewRequestDto createCrewRequestDto,
+                                                   @RequestParam("file") MultipartFile file
+    ) throws IOException {
         CrewResponseDto crewResponseDto = crewService.createCrew(createCrewRequestDto, file);
         return ApiResponse.onSuccess(crewResponseDto);
     }
@@ -62,7 +64,7 @@ public class CrewController {
     //특정 크루 정보 조회
     @Operation(summary = "특정 크루 조회", description = "크루 아이디로 특정 크루 상세정보 조회")
     @GetMapping("/{crew_id}")
-    public ApiResponse<CrewCustomResponse.Preview> getCrew(@PathVariable("crew_id") Long crewId){
+    public ApiResponse<CrewCustomResponse.Preview> getCrew(@PathVariable("crew_id") Long crewId) {
         return ApiResponse.onSuccess(crewService.getCrew(crewId));
     }
 
@@ -103,7 +105,7 @@ public class CrewController {
     //크루 가입
     @Operation(summary = "크루 가입", description = "크루 가입하기")
     @PostMapping("/join/{crew_id}")
-    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user){
+    public ApiResponse<JoinCrewDto> joinCrew(@PathVariable("crew_id") Long crewId, @AuthenticationPrincipal User user) {
         JoinCrewDto joinCrewDto = crewService.joinCrew(crewId, user);
         return ApiResponse.onSuccess(joinCrewDto);
     }
