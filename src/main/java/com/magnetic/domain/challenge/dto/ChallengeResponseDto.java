@@ -15,6 +15,7 @@ public record ChallengeResponseDto() {
     @Builder
     public record ChallengePreviewDto(
             Long challengeId,
+            String challengeName,
             LocalDate startAt,
             LocalDate untilWhen,
             String notice,

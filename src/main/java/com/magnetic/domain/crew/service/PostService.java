@@ -7,12 +7,17 @@ import com.magnetic.domain.crew.entity.Post;
 import com.magnetic.domain.crew.repository.CrewPostRepository;
 import com.magnetic.domain.crew.repository.PostRepository;
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.s3.S3Manager;
+import com.magnetic.s3.entity.Uuid;
+import com.magnetic.s3.repository.UuidRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,11 +29,19 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CrewPostRepository crewPostRepository;
+    private final UuidRepository uuidRepository;
+    private final S3Manager s3Manager;
 
     //게시글 생성
     //CreatePostRequestDto에 post(postType, content, photoUrl) + user(nickname) 포함
-    public PostResponseDto createPost(CreatePostRequestDto createPostRequestDto, User user) {
-        Post post = createPostRequestDto.toEntity(); //RequestDto로 받은 정보 엔티로 바꿔서 post에 저장
+    public PostResponseDto createPost(CreatePostRequestDto createPostRequestDto, MultipartFile file, User user) {
+        String uuid = UUID.randomUUID().toString();
+        Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                .uuid(uuid).build());
+
+        String url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
+
+        Post post = createPostRequestDto.toEntity(url, user); //RequestDto로 받은 정보 엔티로 바꿔서 post에 저장
         Post savedPost = postRepository.save(post);
         return PostResponseDto.from(savedPost, user);
     }
