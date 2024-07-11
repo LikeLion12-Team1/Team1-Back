@@ -44,7 +44,7 @@ public class CrewService {
         String url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
 
         Crew crew = createCrewRequestDto.toEntity();//CreateCrewRequestDto 객체에서 Crew 객체를 생성
-        crew.setCrewImg(url);
+        crew.setImage(url);
 
         Crew savedCrew = crewRepository.save(crew);//crewRepository에 crew 객체를 저장하고, 저장된 객체를 savedCrew에 할당
         return CrewResponseDto.from(savedCrew);//Crew 객체를 CrewResponseDto 객체로 변환하여 반환
