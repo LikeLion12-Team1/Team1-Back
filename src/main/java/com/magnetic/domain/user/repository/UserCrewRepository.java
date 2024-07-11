@@ -35,5 +35,7 @@ public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
             "FROM UserCrew a " +
             "WHERE a.user.userId = :userId AND a.crew.crewId = :crewId")
     Optional<UserCrew> findByUserIdAndCrewId(@Param("userId") Long userId, @Param("crewId") Long crewId);
+
+    Long countAllByCrew(Crew crew);
 }
 
