@@ -7,14 +7,11 @@ import com.magnetic.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-import static com.magnetic.domain.crew.entity.QCrew.crew;
 
 @Slf4j//Lombok 라이브러리를 사용하여 로깅 기능을 제공
 @RestController//REST API 컨트롤러임
