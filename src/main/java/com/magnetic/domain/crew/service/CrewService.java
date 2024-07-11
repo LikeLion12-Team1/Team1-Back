@@ -9,6 +9,7 @@ import com.magnetic.domain.crew.repository.CrewRepository;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.domain.user.repository.UserCrewRepository;
+import com.magnetic.domain.user.repository.UserPlantRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
 import com.magnetic.global.common.exception.handler.CrewHandler;
 import com.magnetic.s3.S3Manager;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,6 +37,7 @@ public class CrewService {
     private final CrewRepository crewRepository;//크루 관련 데이터 액세스를 위한 리포지토리 인터페이스를 주입
     private final UserCrewRepository userCrewRepository;
     private final CrewChallengeRepository crewChallengeRepository;
+    private final UserPlantRepository userPlantRepository;
     private final UuidRepository uuidRepository;
     private final S3Manager s3Manager;
 
@@ -100,7 +103,7 @@ public class CrewService {
     }
 
     //크루 가입
-    public JoinCrewDto joinCrew(Long crewId, User user){
+    public JoinCrewDto joinCrew(Long crewId, User user) {
         Crew crew = crewRepository.findById(crewId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));
 
@@ -148,11 +151,10 @@ public class CrewService {
     }
 
     //크루 플랜트 조회
-    public List<CrewPlantResponseDto> getCrewPlants(Long crewId){
-        // 특정 크루에 속한 멤버들의 닉네임과 메인 플랜트 아이디 조회
+    public List<CrewPlantResponseDto> getCrewPlants(Long crewId) {
         Crew crew = crewRepository.findById(crewId)
                 .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
-        return crewRepository.findNicknameAndMainPlant(crew);
+        return crewRepository.findAllUserAndMainPlantIdByCrew(crew);
     }
 }
 
