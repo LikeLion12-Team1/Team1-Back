@@ -146,6 +146,17 @@ public class CrewService {
                 .crewStartAt(crew.getCreatedAt())
                 .build();
     }
+
+    //크루 플랜트 조회
+    public List<CrewPlantResponseDto> getCrewPlants(Long crewId, User user){
+        //해당 크루가 존재하는지 확인
+        Crew crew = crewRepository.findById(crewId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 크루가 존재하지 않습니다."));
+
+
+
+
+    }
 }
 
     
