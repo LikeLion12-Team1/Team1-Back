@@ -13,4 +13,7 @@ public interface CrewChallengeRepository extends JpaRepository<CrewChallenge, Lo
 
     @Query("SELECT a.challenge FROM CrewChallenge a WHERE a.crew = :crew")
     List<Challenge> findAllChallengeByCrew(@Param("crew") Crew crew);
+
+    @Query("SELECT a.crew FROM CrewChallenge a WHERE a.challenge = :challenge")
+    List<Crew> findAllCrewByChallenge(@Param("challenge") Challenge challenge);
 }
