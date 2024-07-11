@@ -6,7 +6,6 @@ import com.magnetic.domain.calendar.entity.Todo;
 import com.magnetic.domain.crew.entity.Like;
 import com.magnetic.domain.crew.entity.Post;
 import com.magnetic.domain.crew.entity.Reply;
-import com.magnetic.domain.crew.entity.Report;
 import com.magnetic.domain.user.dto.UserRequestDto;
 import com.magnetic.domain.user.entity.enums.Role;
 import com.magnetic.global.common.BaseEntity;

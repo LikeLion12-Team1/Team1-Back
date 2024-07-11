@@ -86,6 +86,19 @@ public class PostService {
         postRepository.delete(post);
     }
 
+    //게시글 신고
+    public boolean reportPost (Long postId){
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));;
+        if(post != null){
+            post.reportPost();
+            postRepository.save(post);
+            return true;
+        }
+        return false;
+
+    }
+
     public PostResponseDto getPostList(String crewName) {
         return null;
     }
