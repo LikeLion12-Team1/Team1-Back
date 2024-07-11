@@ -25,14 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor//DI 생성자 주입을 임의의 코드없이 자동으로 설정해주는 어노테이션
+@RequiredArgsConstructor
 @Transactional
 public class PostService {
 
@@ -94,18 +92,6 @@ public class PostService {
                 .build();
     }
 
-
-//    //게시글 목록 조회
-//    public List<PostResponseDto> getPostsByCrewName(String crewName, User user) {
-//        List<Post> posts = crewPostRepository.findAllPostByCrewName(crewName, user);
-//        return posts.stream()
-//                .map(PostResponseDto::from)
-//                .collect(Collectors.toList());
-//    }
-
-    //게시글 타입별 조회도 만들어야합니댜...
-
-
     //게시글 수정
     public PostResponseDto updatePost(Long postId, UpdatePostRequestDto updatePostRequestDto, User user) {
         Post post = postRepository.findById(postId)
@@ -116,7 +102,6 @@ public class PostService {
         Post updatedPost = postRepository.save(post);
         return PostResponseDto.from(updatedPost, user);
     }
-
 
     //게시글 삭제
     public void deletePost(Long postId) {
