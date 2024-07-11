@@ -29,6 +29,7 @@ public class Post extends BaseEntity {
     private String photoUrl;
     private String category;
     private Byte isVerified;
+    private Long likeCount;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CrewPost> crewposts;
