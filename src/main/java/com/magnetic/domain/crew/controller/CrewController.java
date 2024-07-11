@@ -1,6 +1,7 @@
 package com.magnetic.domain.crew.controller;
 
 import com.magnetic.domain.crew.dto.crewdto.*;
+import com.magnetic.domain.crew.entity.Crew;
 import com.magnetic.domain.crew.service.CrewService;
 import com.magnetic.domain.user.entity.User;
 import com.magnetic.global.common.ApiResponse;
@@ -109,5 +110,15 @@ public class CrewController {
         JoinCrewDto joinCrewDto = crewService.joinCrew(crewId, user);
         return ApiResponse.onSuccess(joinCrewDto);
     }
+
+    //크루 플랜트 조회
+    @Operation(summary = "크루원 식물 목록 조회 (크루 플랜트)", description = "크루원의 메인 식물 목록 조회하기")
+    @GetMapping("/{crew_id}/crew-plant")
+    public ApiResponse<List<CrewPlantResponseDto>> getCrewPlant(
+            @PathVariable("crew_id") Long crewId){
+        return ApiResponse.onSuccess(crewService.getCrewPlants(crewId));
+
+    }
+
 }
 

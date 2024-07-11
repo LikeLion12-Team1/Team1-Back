@@ -1,5 +1,6 @@
 package com.magnetic.domain.crew.repository.impl;
 
+import com.magnetic.domain.crew.dto.crewdto.CrewPlantResponseDto;
 import com.magnetic.domain.crew.dto.crewdto.CrewResponseDto;
 import com.magnetic.domain.crew.dto.postdto.QueryPostResponse;
 import com.magnetic.domain.crew.entity.Crew;
@@ -9,6 +10,7 @@ import com.magnetic.domain.crew.entity.QPost;
 import com.magnetic.domain.crew.repository.CrewRepositoryCustom;
 import com.magnetic.domain.user.entity.QUser;
 import com.magnetic.domain.user.entity.QUserCrew;
+import com.magnetic.domain.user.entity.QUserPlant;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -71,6 +73,23 @@ public class CrewRepositoryCustomImpl implements CrewRepositoryCustom {
                 .leftJoin(post.user, user)
                 .leftJoin(crewPost).on(post.eq(crewPost.post))
                 .where(crewPost.crew.eq(crew))
+                .fetch();
+    }
+
+    @Override
+    public List<CrewPlantResponseDto> findNicknameAndMainPlant(Crew crew) {
+        QUser user = QUser.user;
+        QUserCrew userCrew = QUserCrew.userCrew;
+        QUserPlant userPlant = QUserPlant.userPlant;
+
+        return queryFactory
+                .selectDistinct(Projections.constructor(CrewPlantResponseDto.class,
+                        user.nickname,
+                        userPlant.plant.plantId))
+                .from(user)
+                .leftJoin(userCrew).on(userCrew.user.eq(user), userCrew.crew.eq(crew))
+                .leftJoin(userPlant).on(userPlant.user.eq(user))
+                .where(userPlant.isMain.eq((byte) 1))
                 .fetch();
     }
 }
