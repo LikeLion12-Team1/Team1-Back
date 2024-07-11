@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -36,9 +37,10 @@ public class PostController {
     //게시글 생성
     @Operation(summary = "게시글 생성", description = "게시글 생성하기")
     @PostMapping(consumes = "multipart/form-data")
-    public ApiResponse<PostResponseDto> createPost(@RequestBody CreatePostRequestDto createPostRequestDto,
+    public ApiResponse<PostResponseDto> createPost(@ModelAttribute CreatePostRequestDto createPostRequestDto,
                                                    @RequestParam("file") MultipartFile file,
-                                                   @AuthenticationPrincipal User user) {
+                                                   @AuthenticationPrincipal User user
+    ) throws IOException {
         PostResponseDto postResponseDto = postService.createPost(createPostRequestDto, file, user);
         return ApiResponse.created(postResponseDto);
     }
