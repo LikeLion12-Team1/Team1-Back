@@ -70,4 +70,12 @@ public class PostController {
         postService.deletePost(postId);
         return ApiResponse.noContent();
     }
+
+    //게시글 신고
+    @Operation(summary = "게시글 신고", description = "게시글 신고하기")
+    @PostMapping("/{postId}/report")
+    public ApiResponse<Boolean> reportPost(@PathVariable Long postId){
+        boolean isReported = postService.reportPost(postId);
+        return ApiResponse.onSuccess(isReported);
+    }
 }

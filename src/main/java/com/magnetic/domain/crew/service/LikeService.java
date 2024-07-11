@@ -31,9 +31,11 @@ public class LikeService {
         //현재 사용자가 해당 게시글에 좋아요를 누르지 않았다면
         if (!likeRepository.existsByUserAndPost(user, post)) {
             likeRepository.save(new Like(user, post));
+            postRepository.updateLikeCount(post.getPostId(),1);
             return new LikeResponseDto(true,"좋아요 부여");
         } else {
             likeRepository.deleteByUserAndPost(user, post);
+            postRepository.updateLikeCount(post.getPostId(),-1);
             return new LikeResponseDto(false,"좋아요 취소");
         }
 

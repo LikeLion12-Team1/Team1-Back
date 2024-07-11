@@ -25,6 +25,7 @@ public class Crew {
     private String name;
     private String region;
     private String sportsCategory;
+
     private Long crewCount;
     private LocalDate createdAt;
     private LocalDate joinedAt;
