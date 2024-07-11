@@ -33,10 +33,6 @@ public class UserPlant {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    public void unlock() {
-        isLocked = 1;
-    }
-
     public void setMain() {
         isMain = 1;
     }
