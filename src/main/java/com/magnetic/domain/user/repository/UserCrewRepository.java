@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface UserCrewRepository extends JpaRepository<UserCrew, Long> {
 
-    @Query("SELECT a.crew FROM UserCrew a WHERE a.user = :user")
+    @Query("SELECT uc.crew FROM UserCrew uc WHERE uc.status = 'active' AND uc.user = :user")
     List<Crew> findAllCrewByUser(@Param("user") User user);
 
     @Query("SELECT a.user FROM UserCrew a WHERE a.crew.name = :crewName")

@@ -24,6 +24,8 @@ public class Todo extends BaseEntity {
     private Long todoId;
 
     private String content;
+
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT default 0")
     private Byte status;
     private String category;
 
