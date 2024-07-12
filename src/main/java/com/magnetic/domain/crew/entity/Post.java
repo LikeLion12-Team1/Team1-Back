@@ -29,12 +29,12 @@ public class Post extends BaseEntity {
     private String photoUrl;
     private String category;
 
-    @Column(name = "is_verified", nullable = false, columnDefinition = "TINYINT default 0")
+    @Column(name = "is_verified", columnDefinition = "TINYINT default 0")
     private Byte isVerified;
 
     private boolean isReported;
 
-    @Column(name = "like_count", nullable = false, columnDefinition = "BIGINT default 0")
+    @Column(name = "like_count", columnDefinition = "BIGINT default 0")
     private Long likeCount;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)

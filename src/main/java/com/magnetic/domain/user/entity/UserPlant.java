@@ -21,11 +21,11 @@ public class UserPlant {
     @Column(name = "user_plant_id")
     private Long userPlantId;
 
-    @Column(name = "is_locked", nullable = false, columnDefinition = "TINYINT default 0")
+    @Column(name = "is_locked", columnDefinition = "TINYINT default 0")
     private Byte isLocked;
     private LocalDate getAt;
 
-    @Column(name = "is_main", nullable = false, columnDefinition = "TINYINT default 0")
+    @Column(name = "is_main", columnDefinition = "TINYINT default 0")
     private Byte isMain;
 
     @ManyToOne(fetch = FetchType.LAZY)

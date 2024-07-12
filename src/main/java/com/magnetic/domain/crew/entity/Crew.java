@@ -27,7 +27,7 @@ public class Crew {
     private String region;
     private String sportsCategory;
 
-    @Column(name = "crew_count", nullable = false, columnDefinition = "BIGINT default 0")
+    @Column(name = "crew_count", columnDefinition = "BIGINT default 0")
     private Long crewCount;
 
     @CreatedDate
