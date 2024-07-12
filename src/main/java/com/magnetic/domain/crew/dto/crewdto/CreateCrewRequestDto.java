@@ -27,8 +27,6 @@ public class CreateCrewRequestDto {
         this.sportsCategory = sportsCategory;
         this.createdAt = createdAt;
     }
-
-
     //CreateCrewRequestDto 객체를 Crew 엔티티로 변환
     //크루 생성 요청에 사용
     public Crew toEntity() {
