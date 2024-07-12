@@ -13,4 +13,7 @@ public interface UserPlantRepository extends JpaRepository<UserPlant, Long> {
 
     @Query("SELECT a.plant.plantId FROM UserPlant a WHERE a.isMain = 1 AND a.user = :user")
     Long findMainPlantId(@Param("user") User user);
+
+    @Query("SELECT a.plant FROM UserPlant a WHERE a.isMain = 1 AND a.user = :user")
+    Plant findMainPlant(@Param("user") User user);
 }

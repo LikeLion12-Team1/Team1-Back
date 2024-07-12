@@ -34,18 +34,17 @@ public class PlantService {
                 .build();
     }
 
-    public String setMainPlant(Long plantId, Long previousMainPlantId, User user) {
-        Plant plant = plantRepository.findById(plantId)
-                .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
-        UserPlant userPlant = userPlantRepository.findUserPlantByUserAndPlant(user, plant);
-        userPlant.setMain();
+    public String setMainPlant(Long newMainId, Long preMainId, User user) {
+        Plant newMainPlant = plantRepository.findById(newMainId)
+                        .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
+        Plant preMainPlant = userPlantRepository.findMainPlant(user);
 
-        Plant preMainPlant = plantRepository.findById(previousMainPlantId)
-                .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
+        UserPlant newUserPlant = userPlantRepository.findUserPlantByUserAndPlant(user, newMainPlant);
+        newUserPlant.setMain();
+        userPlantRepository.save(newUserPlant);
+
         UserPlant preUserPlant = userPlantRepository.findUserPlantByUserAndPlant(user, preMainPlant);
         preUserPlant.undoMain();
-
-        userPlantRepository.save(userPlant);
         userPlantRepository.save(preUserPlant);
 
         return "메인 식물이 변경되었습니다.";
