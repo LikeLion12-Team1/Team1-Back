@@ -21,10 +21,10 @@ public class UserChallenge {
 
     private String status;
 
-    @Column(name = "verification_count", nullable = false, columnDefinition = "BIGINT default 0")
+    @Column(name = "verification_count", columnDefinition = "BIGINT default 0")
     private Long verificationCount;
 
-    @Column(name = "is_paid_up", nullable = false, columnDefinition = "TINYINT default 0")
+    @Column(name = "is_paid_up", columnDefinition = "TINYINT default 0")
     private Byte isPaidUp;
 
     @ManyToOne(fetch = FetchType.LAZY)

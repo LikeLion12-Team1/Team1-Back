@@ -22,7 +22,7 @@ public class UserCrew extends BaseEntity {
     @Column(name = "user_crew_id")
     private Long userCrewId;
 
-    @Column(name = "status", nullable = false, columnDefinition = "varchar(10) default 'active'")
+    @Column(name = "status", columnDefinition = "varchar(10) default 'active'")
     private String status;
 
     private LocalDate inactiveDate;
