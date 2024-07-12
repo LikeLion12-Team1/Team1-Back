@@ -34,7 +34,7 @@ public class PlantService {
                 .build();
     }
 
-    public String setMainPlant(Long newMainId, Long preMainId, User user) {
+    public String setMainPlant(Long newMainId, User user) {
         Plant newMainPlant = plantRepository.findById(newMainId)
                         .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
         Plant preMainPlant = userPlantRepository.findMainPlant(user);
