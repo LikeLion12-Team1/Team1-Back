@@ -42,18 +42,32 @@ public class CrewService {
     private final S3Manager s3Manager;
 
     // 크루 생성
-    public CrewResponseDto createCrew(CreateCrewRequestDto createCrewRequestDto, MultipartFile file) {
-        String uuid = UUID.randomUUID().toString();
-        Uuid savedUuid = uuidRepository.save(Uuid.builder()
-                .uuid(uuid).build());
+    public Long createCrew(CreateCrewRequestDto createCrewRequestDto) {
+        return crewRepository.save(createCrewRequestDto.toEntity()).getCrewId();//Crew 객체를 CrewResponseDto 객체로 변환하여 반환
+    }
 
-        String url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
+    // 크루 생성 이미지 업로드
+    public CrewResponseDto createCrewUploadImg(Long crewId, MultipartFile file) {
+        String url = null;
+        Crew crew = crewRepository.findById(crewId)
+                .orElseThrow(() -> new CrewHandler(ErrorStatus._NOT_FOUND_CREW));
 
-        Crew crew = createCrewRequestDto.toEntity();//CreateCrewRequestDto 객체에서 Crew 객체를 생성
-        crew.setImage(url);
+        if (file != null && !file.isEmpty()) {
+            String uuid = UUID.randomUUID().toString();
+            Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                    .uuid(uuid).build());
 
-        Crew savedCrew = crewRepository.save(crew);//crewRepository에 crew 객체를 저장하고, 저장된 객체를 savedCrew에 할당
-        return CrewResponseDto.from(savedCrew);//Crew 객체를 CrewResponseDto 객체로 변환하여 반환
+            url = s3Manager.uploadFile(s3Manager.generateImage(savedUuid), file);
+            crew.setImage(url);
+        }
+        return CrewResponseDto.builder()
+                .photoUrl(url)
+                .crewId(crewId)
+                .name(crew.getName())
+                .region(crew.getRegion())
+                .sportsCategory(crew.getSportsCategory())
+                .createdAt(crew.getCreatedAt())
+                .build();
     }
 
     // 크루 목록 조회

@@ -24,13 +24,22 @@ public class CrewController {
 
     private final CrewService crewService;
 
-    // 크루 생성
-    @Operation(summary = "크루 생성", description = "크루 생성하기")
-    @PostMapping(consumes = "multipart/form-data")
-    public ApiResponse<CrewResponseDto> createCrew(@ModelAttribute CreateCrewRequestDto createCrewRequestDto,
-                                                   @RequestParam("file") MultipartFile file
+    // 크루 생성: RequestBody 받기
+    @Operation(summary = "크루 생성: RequestBody 받기", description = "크루 생성하기: 크루 정보 받기")
+    @PostMapping()
+    public ApiResponse<Long> createCrew(@RequestBody CreateCrewRequestDto createCrewRequestDto
+    ) {
+        return ApiResponse.onSuccess(crewService.createCrew(createCrewRequestDto));
+    }
+
+    // 크루 생성: 크루 사진 업로드
+    @Operation(summary = "크루 생성: 이미지 업로드", description = "크루 생성하기: 크루 이미지 업로드")
+    @PostMapping(value = "/{post_id}",consumes = "multipart/form-data")
+    public ApiResponse<CrewResponseDto> createCrew(
+            @PathVariable("post_id") Long postId,
+            @RequestParam("file") MultipartFile file
     ) throws IOException {
-        CrewResponseDto crewResponseDto = crewService.createCrew(createCrewRequestDto, file);
+        CrewResponseDto crewResponseDto = crewService.createCrewUploadImg(postId, file);
         return ApiResponse.onSuccess(crewResponseDto);
     }
 
