@@ -32,10 +32,9 @@ public class PlantController {
     @PostMapping("/{plant_id}")
     public ApiResponse<?> setMainPlant(
             @PathVariable(name = "plant_id") Long plantId,
-            @RequestBody PlantRequest request,
             @AuthenticationPrincipal User user
     ) {
-        return ApiResponse.onSuccess(plantService.setMainPlant(plantId, request.previousMainPlantId(), user));
+        return ApiResponse.onSuccess(plantService.setMainPlant(plantId, user));
     }
 
     @Operation(summary = "사용자 대표 식물 조회",
