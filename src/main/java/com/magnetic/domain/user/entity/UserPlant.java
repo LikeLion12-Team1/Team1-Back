@@ -36,11 +36,11 @@ public class UserPlant {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    public void setMain() {
-        isMain = 1;
+    public void undoMain() {
+        isMain = (byte) 0;
     }
 
-    public void undoMain() {
-        isMain = 0;
+    public void setMain() {
+        isMain = (byte) 1;
     }
 }
