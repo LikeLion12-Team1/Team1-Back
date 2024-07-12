@@ -23,7 +23,7 @@ public class PlantController {
     @GetMapping("")
     public ApiResponse<PlantResponse.PlantPreviewListDto> getPlantList(
             @AuthenticationPrincipal User user
-            )  {
+    ) {
         return ApiResponse.onSuccess(plantService.getUnlockedPlantList(user));
     }
 
@@ -39,7 +39,7 @@ public class PlantController {
     }
 
     @Operation(summary = "사용자 대표 식물 조회",
-    description = "사용자가 설정한 대표 식물을 조회")
+            description = "사용자가 설정한 대표 식물을 조회")
     @GetMapping("/main-plant")
     public ApiResponse<Long> getMainPlant(
             @AuthenticationPrincipal User user
@@ -54,7 +54,7 @@ public class PlantController {
             @PathVariable(name = "plant_id") Long plantId,
             @AuthenticationPrincipal User user
     ) {
-         return ApiResponse.onSuccess(plantService.unlockPlant(plantId, user));
+        return ApiResponse.onSuccess(plantService.unlockPlant(plantId, user));
     }
 
 }

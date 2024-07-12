@@ -8,7 +8,7 @@ public record PlantResponse() {
 
     @Builder
     public record PlantPreviewListDto(
-            Long holdingTokens,
+            Long mainPlantId,
             List<PlantPreviewDto> plantPreviewDtoList,
             Long userCount
     ) {

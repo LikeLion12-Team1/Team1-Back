@@ -26,9 +26,9 @@ public class PlantService {
 
     public PlantResponse.PlantPreviewListDto getUnlockedPlantList(User user) {
         List<PlantResponse.PlantPreviewDto> allPlantByUser = plantRepository.findAllUnlockedPlantByUser(user);
-
+        Long mainPlantId = userPlantRepository.findMainPlantId(user);
         return PlantResponse.PlantPreviewListDto.builder()
-                .holdingTokens(user.getPlantToken())
+                .mainPlantId(mainPlantId)
                 .plantPreviewDtoList(allPlantByUser)
                 .userCount(user.getPlantToken())
                 .build();
@@ -62,6 +62,7 @@ public class PlantService {
                 .user(user)
                 .plant(plant)
                 .isLocked((byte) 1)
+                .isMain((byte) 0)
                 .build();
 
         userPlantRepository.save(userPlant);
