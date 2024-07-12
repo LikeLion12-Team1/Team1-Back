@@ -9,11 +9,16 @@ import com.magnetic.domain.auth.entity.enums.TokenType;
 import com.magnetic.domain.auth.repository.TokenBlackListRepository;
 import com.magnetic.domain.auth.repository.TokenRepository;
 import com.magnetic.domain.email.dto.EmailResponseDto;
+import com.magnetic.domain.plant.entity.Plant;
+import com.magnetic.domain.plant.repository.PlantRepository;
 import com.magnetic.domain.user.entity.User;
+import com.magnetic.domain.user.entity.UserPlant;
 import com.magnetic.domain.user.entity.enums.Role;
+import com.magnetic.domain.user.repository.UserPlantRepository;
 import com.magnetic.domain.user.repository.UserRepository;
 import com.magnetic.global.common.code.status.ErrorStatus;
 import com.magnetic.global.common.exception.handler.AuthHandler;
+import com.magnetic.global.common.exception.handler.PlantHandler;
 import com.magnetic.global.common.exception.handler.UserHandler;
 import com.magnetic.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +37,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final PlantRepository plantRepository;
+    private final UserPlantRepository userPlantRepository;
     private final TokenRepository tokenRepository;
     private final TokenBlackListRepository tokenBlackListRepository;
     private final PasswordEncoder passwordEncoder;
@@ -48,6 +55,14 @@ public class AuthService {
                 .role(Role.ROLE_USER)
                 .build();
         User savedUser = userRepository.save(user);
+
+        // 처음 가입하면 주는 식물 (1번 식물 지급)
+        Plant plant = plantRepository.findById(1L)
+                        .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
+        userPlantRepository.save(UserPlant.builder()
+                .user(savedUser)
+                .plant(plant)
+                .build());
     }
 
     public AuthResponseDto authenticate(AuthRequestDto request) {

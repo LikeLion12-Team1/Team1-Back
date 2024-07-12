@@ -38,6 +38,8 @@ public class User extends BaseEntity implements UserDetails {
     private String nickname;
     private String region;
     private Role role;
+
+    @Column(name = "plant_token", nullable = false, columnDefinition = "BIGINT default 3")
     private Long plantToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

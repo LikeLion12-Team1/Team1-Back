@@ -5,6 +5,7 @@ import com.magnetic.domain.user.entity.UserCrew;
 import com.magnetic.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +27,10 @@ public class Crew {
     private String region;
     private String sportsCategory;
 
+    @Column(name = "crew_count", nullable = false, columnDefinition = "BIGINT default 0")
     private Long crewCount;
+
+    @CreatedDate
     private LocalDate createdAt;
     private LocalDate joinedAt;
     private String crewImg;

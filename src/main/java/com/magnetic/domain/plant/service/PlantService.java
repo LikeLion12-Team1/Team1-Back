@@ -68,4 +68,8 @@ public class PlantService {
 
         return "해금되었습니다.";
     }
+
+    public Long getMainPlant(User user) {
+        return userPlantRepository.findMainPlantId(user);
+    }
 }

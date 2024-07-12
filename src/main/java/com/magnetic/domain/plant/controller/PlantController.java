@@ -38,6 +38,15 @@ public class PlantController {
         return ApiResponse.onSuccess(plantService.setMainPlant(plantId, request.previousMainPlantId(), user));
     }
 
+    @Operation(summary = "사용자 대표 식물 조회",
+    description = "사용자가 설정한 대표 식물을 조회")
+    @GetMapping("/main-plant")
+    public ApiResponse<Long> getMainPlant(
+            @AuthenticationPrincipal User user
+    ) {
+        return ApiResponse.onSuccess(plantService.getMainPlant(user));
+    }
+
     @Operation(summary = "챌린지 달성 후 식물 해금",
             description = "챌린지 달성 여부 확인 후, 요청한 식물을 해금")
     @PostMapping("/unlock/{plant_id}")

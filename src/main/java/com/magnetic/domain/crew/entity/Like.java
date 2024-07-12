@@ -16,8 +16,8 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long likeId;
 
-    @Column
-    private String likeStatus;
+    @Column(name = "like_status", nullable = false, columnDefinition = "BIGINT default 0")
+    private Long likeStatus;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
