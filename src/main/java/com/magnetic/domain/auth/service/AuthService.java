@@ -32,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -53,15 +54,20 @@ public class AuthService {
                 .nickname(request.email())
                 .region(request.region())
                 .role(Role.ROLE_USER)
+                .plantToken(3L)
+
                 .build();
         User savedUser = userRepository.save(user);
 
         // 처음 가입하면 주는 식물 (1번 식물 지급)
         Plant plant = plantRepository.findById(1L)
-                        .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
+                .orElseThrow(() -> new PlantHandler(ErrorStatus._NOT_FOUND_PLANT));
         userPlantRepository.save(UserPlant.builder()
                 .user(savedUser)
                 .plant(plant)
+                .getAt(LocalDate.now())
+                .isLocked((byte) 1)
+                .isMain((byte) 1)
                 .build());
     }
 
