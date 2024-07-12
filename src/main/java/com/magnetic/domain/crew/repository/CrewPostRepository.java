@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CrewPostRepository extends JpaRepository<CrewPost, Long> {
 
-    @Query("SELECT a.post FROM CrewPost a WHERE a.crew.name = :crewName AND a.post.category = '인증'")
+    @Query("SELECT a.post FROM CrewPost a WHERE a.crew.name = :crewName AND a.post.category = '인증' AND a.post.isVerified = 0")
     List<Post> findAllPostByCrewName(@Param("crewName") String crewName);
 
     void deleteByCrewName(String crewName);

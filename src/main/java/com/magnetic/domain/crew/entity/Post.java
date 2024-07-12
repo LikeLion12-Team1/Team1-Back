@@ -73,11 +73,7 @@ public class Post extends BaseEntity {
     }
 
     public void verify() {
-        if (isVerified == 0) {
-            isVerified = 1;
-        } else {
-            isVerified = 0;
-        }
+        isVerified = 1;
     }
 
     public void reportPost() {
