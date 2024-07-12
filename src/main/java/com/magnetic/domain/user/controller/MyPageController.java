@@ -52,7 +52,7 @@ public class MyPageController {
     }
 
     @Operation(summary = "관리자: 신고글 삭제", description = "관리자 마이크루 페이지에서 신고글 삭제")
-    @DeleteMapping("/crew/{post_id}")
+    @DeleteMapping("/crew/delete/{post_id}")
     public ApiResponse<?> deletePost(
             @PathVariable(name = "post_id") Long postId
     ) {
