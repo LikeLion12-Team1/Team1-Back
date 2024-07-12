@@ -49,6 +49,7 @@ public class PostService {
                 .user(user)
                 .content(createPostRequestDto.getContent())
                 .category(createPostRequestDto.getCategory())
+                .isVerified((byte) 0)
                 .build();
         Post savedPost = postRepository.save(post);
         Crew crew = crewRepository.findByName(crewName)
